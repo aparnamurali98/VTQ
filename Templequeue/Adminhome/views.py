@@ -629,19 +629,19 @@ def delete_darshan(request,did):
     obj = get_object_or_404(darshan_model, id=did)
     obj.delete()
     return HttpResponseRedirect("/Adhome/insert_darshan")
-# def show_enquiry(request):
-#     context = {}
-#     context['enq_list'] = enquiry_model.objects.all()
-#     return render(request, "viewenquiry.html", context)
 def show_enquiry(request):
-    enq_list = enquiry_model.objects.all()
-    for enquiry in enq_list:
-        if enquiry.Status == 'new':
-            enquiry.Status = 'read'
-            enquiry.save()
-    # Prepare the context to pass to the template
-    context = {'enq_list': enq_list}
+    context = {}
+    context['enq_list'] = enquiry_model.objects.all()
     return render(request, "viewenquiry.html", context)
+# def show_enquiry(request):
+#     enq_list = enquiry_model.objects.all()
+#     for enquiry in enq_list:
+#         if enquiry.Status == 'new':
+#             enquiry.Status = 'read'
+#             enquiry.save()
+#     # Prepare the context to pass to the template
+#     context = {'enq_list': enq_list}
+#     return render(request, "viewenquiry.html", context)
 
 #delete special
 def delete_enquiry(request,eid):
