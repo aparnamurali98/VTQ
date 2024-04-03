@@ -643,6 +643,16 @@ def show_enquiry(request):
     context = {'enq_list': enq_list}
     return render(request, "viewenquiry.html", context)
 
+def update_enquiry(request,did):
+    context={}
+    obj=get_object_or_404(enquiry_model,id=did)
+    frm = enquiry_form_form(request.POST or None,instance=obj)
+    if frm.is_valid():
+        frm.save()
+        return HttpResponseRedirect("/Adhome/show_enquiry")
+    context['enq_data'] = frm
+    return render(request, "updateenquiry.html", context)
+
 
 #delete special
 def delete_enquiry(request,eid):
