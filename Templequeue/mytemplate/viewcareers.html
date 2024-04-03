@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table border="1">
+    <tr>
+        <th>Refno</th>
+        <th>Jobtitle </th>
+        <th> Notification</th>
+        <th>notifyfile </th>
+        <th> adddate</th>
+        <th> Status</th>
+
+
+    </tr>
+    {% for obj in careers_list %}
+    <tr>
+
+        <td>{{obj.Refno}}</td>
+        <td>{{obj.Jobtitle}}</td>
+        <td>{{obj.Notification }}</td>
+        <td>{{obj.notifyfile}}</td>
+        <td>{{obj.adddate }}</td>
+        <td>{{obj.Status}}</td>
+
+    </tr>
+     {% endfor %}
+</table>
+</body>
+</html>

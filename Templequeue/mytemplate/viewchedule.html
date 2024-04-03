@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table border="1">
+    <tr>
+        <th> Pooja ID</th>
+        <th>Day ID</th>
+        <th>Timings</th>
+    </tr>
+    {% for obj in schedule_list %}
+    <tr>
+
+        <td>{{obj.poojaid}}</td>
+        <td>{{obj.dayid}}</td>
+        <td>{{obj.Timings}}</td>
+
+
+    </tr>
+     {% endfor %}
+</table>
+</body>
+</html>

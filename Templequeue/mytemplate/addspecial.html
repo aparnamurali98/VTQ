@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+       <style>
+        .messages li {
+            list-style-type: none;
+        }
+        .messages {
+            color: red;
+    </style>
+</head>
+<body>
+<form id="f1" method="post">
+    {% csrf_token %}
+    <table border="1">
+    {{ f.as_table }}
+
+        </table>
+
+
+     <input type="submit" value="submit">
+        {% if messages %}
+
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}> {{ message }}</li>
+        {% endfor %}
+
+    </ul>
+
+{% endif %}
+    <table border="1">
+    <tr>
+        <th>Title</th>
+        <th>Description </th>
+        <th> From_date</th>
+        <th> To_date</th>
+
+    </tr>
+    {% for obj in special_list %}
+    <tr>
+
+        <td>{{obj.Title}}</td>
+        <td>{{obj.Description}}</td>
+        <td>{{obj.From_date}}</td>
+        <td>{{obj.To_date}}</td>
+
+        <td><a href="{% url 'up_special' obj.id %}"> UPDATE </a> </td>
+        <td><a href="{% url 'dele_special' obj.id %}"> DELETE </a> </td>
+
+    </tr>
+     {% endfor %}
+</table>
+</form>
+</body>
+</html>

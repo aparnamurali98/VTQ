@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table border="1">
+    <tr>
+        <th>Title</th>
+        <th>Description </th>
+        <th> From_date</th>
+        <th> To_date</th>
+        <th>status </th>
+    </tr>
+    {% for obj in special_list %}
+    <tr>
+
+        <td>{{obj.Title}}</td>
+        <td>{{obj.Description}}</td>
+        <td>{{obj.From_date}}</td>
+        <td>{{obj.To_date}}</td>
+        <td>{{obj.status}}</td>
+
+
+    </tr>
+     {% endfor %}
+</table>
+</body>
+</html>
