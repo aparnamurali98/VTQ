@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+ {% csrf_token %}
+    <table border="1">
+    {{ f.as_table }}
+    </table>
+    <div id="temple"></div>
+    <script>
+document.getElementById("id_loc").addEventListener("change", function() {
+
+  var selectedValue = this.value;
+
+  fetch('/Devotee/search_temple1/?selected_value=' + selectedValue)
+    .then(response => response.json())
+    .then(data => {
+
+      // Build HTML table using received data
+
+      var html = '<table border="1">';
+      html += '<tr><td> Temple Name  </td><td>Address: </td></tr>'
+      data.data.forEach(obj => {
+        html += '<tr><td> ' + obj.tname + '</td><td>' + obj.taddress+ '</td></tr>';
+        });
+      html += '</table>';
+      document.getElementById('temple').innerHTML = html;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+});
+    </script>
+
+</body>
+</html>

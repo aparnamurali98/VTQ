@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
@@ -12,7 +13,8 @@ from Adminhome.models import location_model
 # Create your views here.
 def home (request):
     return HttpResponse("<a href='insert_devotee'>Sign Up</a>"
-                        "<br><br><a href='insert_enquiry'>Enquriy management</a>")
+                        "<br><br><a href='insert_enquiry'>Enquriy management</a>"
+                        "<br><br><a href='login'>Login</a>")
 def insert_devotee(request):
     context={}
     frm= devo_form(request.POST or None,request.FILES or None)
@@ -43,7 +45,8 @@ def insert_devotee(request):
             else:
                 messages.error(request,"password does not match")
         except Exception as ex:
-            error_message="User Name Alredy Exists"
+            # error_message="User Name Alredy Exists"
+            error_message = ex
 
             messages.error(request,error_message)
 
@@ -65,3 +68,36 @@ def insert_enquiry(request):
 
     context['f'] = frm
     return render(request,"addenquiry.html",context)
+
+def login(request):
+    if request.POST:
+        context={}
+        Uname=request.POST.get('username')
+        paswrd=request.POST.get('password')
+        user=authenticate(username=Uname,password=paswrd)
+        if user is not None:
+            user_id=user.id
+            sp=user.is_superuser
+            if sp is True:
+                return HttpResponseRedirect('/Adhome')
+            roll_obj=role_model.objects.filter(login=user_id)
+            for role_obj in roll_obj:
+                type=role_obj.roletype
+                print(type)
+
+                if type=='2':
+
+                    devote_object=devotee_model.objects.filter(login=user_id)
+                    for obj in devote_object:
+                        request.session["devote_id"]=obj.id
+                        request.session["devote_name"]=obj.dname
+                        print(obj.id)
+                        print(obj.dname)
+                        return HttpResponseRedirect('/Devotee')
+                # elif type=='3':
+
+        else:
+            return HttpResponse("<script>alert('Invalid Credential !!!');window.location='/login';</script>")
+    return render(request, "login.html")
+
+

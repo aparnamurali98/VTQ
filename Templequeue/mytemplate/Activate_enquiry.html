@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+     {% for obj in enquiry_list %}
+<table border="1">
+    <tr>
+        <td>Name</td>
+        <td>{{obj.Name}}</td>
+    </tr>
+     <tr>
+        <td>Email</td>
+        <td>{{obj.Email}}</td>
+    </tr>
+    <tr>
+        <td>Mobile</td>
+        <td>{{obj.Mobile}}</td>
+    </tr>
+    <tr>
+        <td>Query</td>
+        <td>{{obj.Query}}</td>
+    </tr>
+    <tr>
+        <td><a href="{% url 'activate_enquiry' obj.id%}">ACTIVATE</a></td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

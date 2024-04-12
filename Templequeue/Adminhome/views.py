@@ -47,7 +47,8 @@ def home (request):
                         "<br><br><a href='insert_special'>special</a>"
                         "<br><br><a href='insert_careers'>Careers</a>"
                         "<br><br><a href='insert_darshan'>Darshana timming</a>"
-                        "<br><br><a href='show_enquiry'> view enquiry</a>"
+                        "<br><br><a href='view_enquiry'> view enquiry</a>"
+
                         )
 
 def insert_district(request):
@@ -629,9 +630,9 @@ def delete_darshan(request,did):
     obj = get_object_or_404(darshan_model, id=did)
     obj.delete()
     return HttpResponseRedirect("/Adhome/insert_darshan")
-def show_enquiry(request):
+def view_enquiry(request):
     context = {}
-    context['enq_list'] = enquiry_model.objects.all()
+    context['enq_list'] = enquiry_model.objects.filter(Status='new')
     return render(request, "viewenquiry.html", context)
 # def show_enquiry(request):
 #     enq_list = enquiry_model.objects.all()
@@ -639,9 +640,23 @@ def show_enquiry(request):
 #         if enquiry.Status == 'new':
 #             enquiry.Status = 'read'
 #             enquiry.save()
-#     # Prepare the context to pass to the template
 #     context = {'enq_list': enq_list}
 #     return render(request, "viewenquiry.html", context)
+#
+def more_enquiry(request,enid):
+    context={}
+    context['enquiry_list']=enquiry_model.objects.filter(id=enid)
+    return render(request, "Activate_enquiry.html", context)
+def activate_enquiry(request,enid):
+    context={}
+    obj = get_object_or_404(enquiry_model, id=enid)
+    new_status='read'
+    obj.Status=new_status
+    obj.save()
+    return HttpResponseRedirect("/Adhome/view_enquiry")
+
+
+
 
 #delete special
 def delete_enquiry(request,eid):

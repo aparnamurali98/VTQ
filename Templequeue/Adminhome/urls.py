@@ -49,8 +49,10 @@ urlpatterns = [
     path('insert_darshan', views.insert_darshan, name='darshan'),
     path('update_darshan/<did>', views.update_darshan, name='up_dars'),
     path('delete_darshan/<did>', views.delete_darshan, name='dele_dars'),
-    path('show_enquiry/', views.show_enquiry, name='enquiry'),
+    # path('show_enquiry/', views.show_enquiry, name='enquiry'),
     path('delete_enquiry/<eid>', views.delete_enquiry, name='dele_enq'),
-
+    path('view_enquiry',views.view_enquiry,name='enquiry'),
+    path('more_enquiry/<enid>',views.more_enquiry,name='more_enq'),
+    path('activate_enquiry/<enid>', views.activate_enquiry, name='activate_enquiry'),
 
 ]
