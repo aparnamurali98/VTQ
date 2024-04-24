@@ -13,10 +13,11 @@ from .incometype_form import income_form
 from .location_form import loca_form
 from .models import distric_model, priest_model, templeinfo_model, location_model, staff_model, \
     pooja_model, month_model, day_model, transtype_model, income_model, expense_model, poojaschedule_model, \
-    specialday_model, careers_model, darshan_model
+    specialday_model, careers_model, darshan_model, poojatype_model
 from .month_form import month_form
 from .poojaschedule_form import schedule_form
 from .poojatype_form import pooja_form
+from .poojatypecategory_form import poojatype_form
 from .priest_form import prie_form
 from .specialday_form import specialday_form
 from .staff_form import staf_form
@@ -27,6 +28,8 @@ from Registration.models import enquiry_model
 from Registration.models import role_model
 
 from Registration.enquiry_form import enquiry_form
+
+from Devotee.models import application_model
 
 
 # Create your views here.
@@ -48,6 +51,9 @@ def home (request):
                         "<br><br><a href='insert_careers'>Careers</a>"
                         "<br><br><a href='insert_darshan'>Darshana timming</a>"
                         "<br><br><a href='view_enquiry'> view enquiry</a>"
+                        "<br><br><a href='view_application'> view Applications</a>"
+                        "<br><br><a href='insert_poojatype'>Pooja Type </a>"
+
 
                         )
 
@@ -163,15 +169,7 @@ def show_staff(request):
     context['staff_list'] = staff_model.objects.all()
     return render(request, "addstaff.html", context)
 #update district
-def update_staff(request,sid):
-    context={}
-    obj=get_object_or_404(staff_model,id=sid)
-    frm = staf_form(request.POST or None,request.FILES or None,instance=obj)
-    if frm.is_valid():
-        frm.save()
-        return HttpResponseRedirect("/Adhome/insert_staff")
-    context['staff_data'] = frm
-    return render(request, "updatestaff.html", context)
+
 #delete district
 def delete_staff(request,sid):
     context={}
@@ -634,15 +632,7 @@ def view_enquiry(request):
     context = {}
     context['enq_list'] = enquiry_model.objects.filter(Status='new')
     return render(request, "viewenquiry.html", context)
-# def show_enquiry(request):
-#     enq_list = enquiry_model.objects.all()
-#     for enquiry in enq_list:
-#         if enquiry.Status == 'new':
-#             enquiry.Status = 'read'
-#             enquiry.save()
-#     context = {'enq_list': enq_list}
-#     return render(request, "viewenquiry.html", context)
-#
+
 def more_enquiry(request,enid):
     context={}
     context['enquiry_list']=enquiry_model.objects.filter(id=enid)
@@ -654,13 +644,51 @@ def activate_enquiry(request,enid):
     obj.Status=new_status
     obj.save()
     return HttpResponseRedirect("/Adhome/view_enquiry")
-
-
-
-
 #delete special
 def delete_enquiry(request,eid):
     context={}
     obj = get_object_or_404(enquiry_model, id=eid)
     obj.delete()
     return HttpResponseRedirect("/Adhome/show_enquiry")
+def view_application(request):
+    context = {}
+    did = request.session["devote_id"]
+    context['view_appli'] = application_model.objects.filter(Status='Inactive')
+    return render(request, "showapplication.html", context)
+
+
+def insert_poojatype(request):
+    context={}
+    frm= poojatype_form(request.POST or None,request.FILES)
+    pooja=request.POST.get('Pooja_type')
+    if poojatype_model.objects.filter(Pooja_type=pooja).exists():
+        messages.info(request,'Pooja Type is Already Exists')
+        return redirect('/Adhome/insert_poojatype')
+    else:
+
+        if frm.is_valid():
+            frm.save()
+            return redirect('/Adhome/insert_poojatype')
+
+    context['f']=frm
+    context['poojatype_list'] = poojatype_model.objects.all()
+    return render(request,"addpoojatype.html",context)
+def show_poojatype(request):
+    context = {}
+    context['poojatype_list'] = poojatype_model.objects.all()
+    return render(request, "addpoojatype.html", context)
+def update_poojatype(request,pid):
+    context={}
+    obj=get_object_or_404(poojatype_model,id=pid)
+    frm = poojatype_form(request.POST or None,instance=obj)
+    if frm.is_valid():
+        frm.save()
+        return HttpResponseRedirect("/Adhome/insert_poojatype")
+    context['poojatype_data'] = frm
+    return render(request, "updatepoojatype.html", context)
+#delete district
+def delete_poojatype(request,pid):
+    context={}
+    obj = get_object_or_404(poojatype_model, id=pid)
+    obj.delete()
+    return HttpResponseRedirect("/Adhome/insert_poojatype")

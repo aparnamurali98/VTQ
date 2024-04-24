@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'Adminhome',
     'Registration',
     'Devotee',
+    'staff',
 ]
 
 MIDDLEWARE = [

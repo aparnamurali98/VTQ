@@ -20,18 +20,14 @@
     </style>
 </head>
 <body>
+<form id="f1" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table border="1">
+    {{ f.as_table }}
 
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>TIMINGS</th>
-    </tr>
-    {% for obj in darshan_list %}
-    <tr>
-        <td>{{obj.id}}</td>
-        <td>{{obj.Timings}}</td>
-    </tr>
-     {% endfor %}
-</table>
+        </table>
+    <input type="submit" value="upload">
+</form>
+
 </body>
 </html>

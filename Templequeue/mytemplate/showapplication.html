@@ -20,25 +20,25 @@
     </style>
 </head>
 <body>
-    <table border="1">
+<table border="1">
     <tr>
-        <th>Refno</th>
-        <th>Jobtitle </th>
-        <th> Notification</th>
-        <th>notifyfile </th>
-        <th> adddate</th>
-
+        <th>Devotee id</th>
+        <th>career id</th>
+        <th>Resume </th>
+        <th>Status </th>
+        <th>Application_date</th>
 
     </tr>
-    {% for obj in careers_list %}
+    {% for obj in view_appli %}
     <tr>
+        <td>{{obj.Devotee_id}}</td>
+        <td>{{obj.careerid}}</td>
+       <td>{{obj.Resume }}</td>
 
-        <td>{{obj.Refno}}</td>
-        <td>{{obj.Jobtitle}}</td>
-        <td>{{obj.Notification }}</td>
-        <td>{{obj.notifyfile}}</td>
-        <td>{{obj.adddate }}</td>
-        <td><a href="{% url 'application' obj.id %}"> Apply </a> </td>
+        <td>{{obj.Status}}</td>
+        <td>{{obj.Application_date}}</td>
+
+    </tr>
      {% endfor %}
 </table>
 </body>

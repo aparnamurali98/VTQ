@@ -16,6 +16,9 @@ class devotee_model(models.Model):
     mobile = models.BigIntegerField()
     loc = models.ForeignKey(location_model, on_delete=models.CASCADE)
     login=models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+
+
+
 class role_model(models.Model):
     login = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     roletype=models.CharField(max_length=10)

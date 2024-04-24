@@ -9,6 +9,8 @@ from .enquiry_form import enquiry_form
 from .models import devotee_model, role_model, enquiry_model
 from Adminhome.models import location_model
 
+from Adminhome.models import staff_model
+
 
 # Create your views here.
 def home (request):
@@ -94,7 +96,17 @@ def login(request):
                         print(obj.id)
                         print(obj.dname)
                         return HttpResponseRedirect('/Devotee')
-                # elif type=='3':
+                elif type=='3':
+                    staff_object = staff_model.objects.filter(login=user_id)
+                    for obj in staff_object:
+                        request.session["staff_id"] = obj.id
+                        request.session["staff_name"] = obj.sname
+                        print(obj.id)
+                        print(obj.sname)
+                        return HttpResponseRedirect('/staff_home')
+                    else:
+                        return HttpResponse(
+                            "<script>alert('Invalid Credential !!!');window.location='/login';</script>")
 
         else:
             return HttpResponse("<script>alert('Invalid Credential !!!');window.location='/login';</script>")

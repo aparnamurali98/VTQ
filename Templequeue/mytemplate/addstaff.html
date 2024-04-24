@@ -34,37 +34,6 @@
 
     </ul>
 {% endif %}
- <table border="1">
-    <tr>
-        <th>Staff Id</th>
-        <th>Staff Name</th>
-        <th>Address</th>
-        <th>Email</th>
-        <th>Mobile</th>
-        <th>Photo</th>
-        <th>DOB</th>
-        <th>Age</th>
-        <th>Gender</th>
-
-    </tr>
-    {% for obj in staff_list %}
-    <tr>
-        <td>{{obj.id}}</td>
-        <td>{{obj.sname}}</td>
-        <td>{{obj.address}}</td>
-        <td>{{obj.email}}</td>
-        <td>{{obj.mobile}}</td>
-        <td>{{obj.photo}}</td>
-        <td>{{obj.dob}}</td>
-        <td>{{obj.age}}</td>
-        <td>{{obj.gender}}</td>
-        <td><a href="{% url 'up_staff' obj.id %}"> UPDATE </a> </td>
-        <td><a href="{% url 'dele_staff' obj.id %}"> DELETE </a> </td>
-
-
-    </tr>
-     {% endfor %}
-</table>
 
 
 </form>

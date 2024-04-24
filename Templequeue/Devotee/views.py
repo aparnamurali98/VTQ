@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -15,20 +16,25 @@ from Adminhome.models import careers_model
 
 from Adminhome.models import darshan_model
 
+from .application_form import application_form
+from .models import application_model
 from .searchtemple_form import location_form
-
+from Registration.models import devotee_model
 
 
 # Create your views here.
 def home (request):
     return HttpResponse("<a href='show_staff'>view staff</a>"
-                       # "<br><br><a href='show_templeinfo'> view templeinfo</a>"
+                       "<br><br><a href='show_templeinfo'> view templeinfo</a>"
                         "<br><br><a href='show_schedule'> view schedule</a>"
                         "<br><br><a href='show_special'> view special</a>"
                         "<br><br><a href='show_income'> viewincome</a>"
                         "<br><br><a href='show_careers'> view careers</a>"
                         "<br><br><a href='show_darshan'> view darshan timing</a>"
-                        "<br><br><a href='search_temple'> Search Temple</a>"
+                
+                        "<br><br><a href='search_temple'>Search tempe</a>"
+
+
 
                         )
 
@@ -38,10 +44,10 @@ def show_staff(request):
     context['staff_list'] = staff_model.objects.all()
     return render(request, "viewstaff.html", context)
 
-# def show_templeinfo(request):
-#     context = {}
-#     context['info_list'] = templeinfo_model.objects.all()
-#     return render(request, "vietemp.html", context)
+def show_templeinfo(request):
+    context = {}
+    context['info_list'] = templeinfo_model.objects.all()
+    return render(request, "vietemp.html", context)
 
 def show_schedule(request):
      context = {}
@@ -59,6 +65,7 @@ def show_careers(request):
     context = {}
     context['careers_list'] = careers_model.objects.all()
     return render(request, "viewcareers.html", context)
+
 def show_darshan(request):
     context = {}
     context['darshan_list'] = darshan_model.objects.all()
@@ -71,5 +78,26 @@ def search_temple(request):
 def search_temple1(request):
     locid = request.GET.get('selected_value')
     data = templeinfo_model.objects.filter(loc=locid)
-    data_list = [{'tname': item.tname, 'taddress': item.address} for item in data]
+    data_list = [{'tname': item.tname, 'taddress': item.address, 'tdiscription': item.discription, 'tcotname': item.cotname, 'tPhoto': item.Photo.url} for item in data]
     return JsonResponse({'data': data_list})
+def insert_Application(request,cid):
+    context={}
+    did = request.session["devote_id"]
+    devote_object = devotee_model.objects.get(id=did)
+    print(did)
+    careerid=careers_model.objects.get(id=cid)
+    frm=application_form(request.POST or None,request.FILES or None )
+    if request.POST:
+        if frm.is_valid():
+            Resume = request.FILES.get('Resume')
+            # Resume = File1.name
+            appli=application_model.objects.create(careerid=careerid,Devotee_id=devote_object,Resume=Resume)
+            return HttpResponseRedirect("/Devotee/show_careers")
+    context['f'] = frm
+    return render(request,"apply_career.html",context)
+
+
+
+
+
+

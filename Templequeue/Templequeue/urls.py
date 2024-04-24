@@ -24,6 +24,7 @@ urlpatterns = [
     path('Adhome/',include('Adminhome.urls')),
     path('login/',include('Registration.urls')),
     path('Devotee/',include('Devotee.urls')),
+    path('staff_home/', include('staff.urls')),
 
 ]
 if settings.DEBUG:

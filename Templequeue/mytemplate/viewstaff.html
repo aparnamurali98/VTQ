@@ -7,31 +7,45 @@
 </head>
 <body>
  <table border="1">
+     {% for obj in staff_list %}
     <tr>
         <th>Staff Id</th>
-        <th>Staff Name</th>
-        <th>Address</th>
-        <th>Email</th>
-        <th>Mobile</th>
-        <th>Photo</th>
-        <th>DOB</th>
-        <th>Age</th>
-        <th>Gender</th>
-
-
-    </tr>
-    {% for obj in staff_list %}
-    <tr>
         <td>{{obj.id}}</td>
-        <td>{{obj.sname}}</td>
-        <td>{{obj.address}}</td>
-        <td>{{obj.email}}</td>
-        <td>{{obj.mobile}}</td>
-        <td>{{obj.photo}}</td>
-        <td>{{obj.dob}}</td>
-        <td>{{obj.age}}</td>
-        <td>{{obj.gender}}</td>
+    </tr>
+     <tr>
+         <th>Staff Name</th>
+         <td>{{obj.sname}}</td>
+     </tr>
+       <tr> <th>Address</th>
+            <td>{{obj.address}}</td>
+       </tr>
+       <tr>
+           <th>Email</th>
+           <td>{{obj.email}}</td>
+           </tr>
+     <tr>
+        <th>Mobile</th>
+         <td>{{obj.mobile}}</td>
+     </tr>
+      <tr>
+          <th>Photo</th>
+           <td>{{obj.photo}}</td>
+      </tr>
+     <tr>
+        <th>DOB</th>
+         <td>{{obj.dob}}</td>
+     </tr>
+     <tr>
+        <th>Age</th>
+         <td>{{obj.age}}</td>
+         </tr>
+     <tr>
+        <th>Gender</th>
+         <td>{{obj.gender}}</td>
+     </tr>
 
+    <tr>
+        <td><a href="{% url 'up_staff' obj.id %}"> UPDATE </a> </td>
 
 
 

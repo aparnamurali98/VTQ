@@ -3,6 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+
+    </style>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
@@ -24,9 +39,10 @@ document.getElementById("id_loc").addEventListener("change", function() {
       // Build HTML table using received data
 
       var html = '<table border="1">';
-      html += '<tr><td> Temple Name  </td><td>Address: </td></tr>'
+      html += '<tr><td> Temple Name  </td><td>Address </td> <td>discription </td> <td>contact name </td> <td>Photo </td></tr>'
       data.data.forEach(obj => {
-     html += '<tr><td> ' + obj.tname + '</td><td>' + obj.taddress+ '</td></tr>';
+     html += '<tr><td> ' + obj.tname + '</td><td>' + obj.taddress+ '</td> <td>' + obj.tdiscription+ '</td> <td>' + obj.tcotname+ '</td>  <td><img src="' + obj.tPhoto + '" alt="Temple Photo" width ="150" height="200"></td></tr>'
+
       });
       html += '</table>';
       document.getElementById('temple').innerHTML = html;

@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+
+
 # Create your models here.
 class distric_model(models.Model):
     distname=models.CharField(max_length=40)
@@ -33,6 +35,7 @@ class staff_model(models.Model):
         db_table="staff"
 
 
+
 class templeinfo_model(models.Model):
     tname=models.CharField(max_length=50)
     address = models.TextField(max_length=100)
@@ -56,10 +59,18 @@ class priest_model(models.Model):
         db_table="hindu_priest"
     def __str__(self):
          return self.Pname
+class poojatype_model(models.Model):
+    Pooja_type=models.CharField(max_length=20)
+    Photo = models.FileField(upload_to="photos", blank=True)
+
+    class Meta:
+        db_table="poojaTypecategory_model"
+    def __str__(self):
+         return self.Pooja_type
 
 
 class pooja_model(models.Model):
-    poojatypeid = models.IntegerField()
+    poojatypeid = models.ForeignKey(poojatype_model, on_delete=models.CASCADE, null=True)
     pname=models.CharField(max_length=30)
     desc= models.TextField(max_length=100)
     priestid =models.ForeignKey(priest_model, on_delete=models.CASCADE)
@@ -92,6 +103,8 @@ class expense_model(models.Model):
     Exptype=models.CharField(max_length=30)
     class Meta:
         db_table="Expense_type"
+
+
 class poojaschedule_model(models.Model):
     poojaid =models.ForeignKey(pooja_model, on_delete=models.CASCADE)
     dayid =models.ForeignKey(day_model, on_delete=models.CASCADE)
@@ -112,8 +125,10 @@ class careers_model(models.Model):
     Jobtitle = models.CharField(max_length=30)
     Notification = models.CharField(max_length=30)
     notifyfile = models.CharField(max_length=50)
-    adddate= models.CharField(max_length=50)
-    Status = models.CharField(max_length=50, default='inactive')
+    adddate=models.DateField(max_length=10)
+    Status = models.CharField(max_length=50)
+
+
 
     class Meta:
         db_table = "careers"

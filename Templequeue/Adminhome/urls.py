@@ -17,7 +17,6 @@ urlpatterns = [
     path('delete_district/<did>',views.delete_district,name='dele_district'),
     path('update_location/<lid>',views.update_location,name='up_location'),
     path('delete_location/<lid>',views.delete_location,name='dele_location'),
-    path('update_staff/<sid>', views.update_staff, name='up_staff'),
     path('delete_staff/<sid>', views.delete_staff, name='dele_staff'),
     path('update_templeinfo/<tid>', views.update_templeinfo, name='up_temple'),
     path('delete_templeinfo/<tid>', views.delete_templeinfo, name='dele_temple'),
@@ -54,5 +53,10 @@ urlpatterns = [
     path('view_enquiry',views.view_enquiry,name='enquiry'),
     path('more_enquiry/<enid>',views.more_enquiry,name='more_enq'),
     path('activate_enquiry/<enid>', views.activate_enquiry, name='activate_enquiry'),
+    path('view_application',views.view_application,name='view_application'),
+    path('insert_poojatype',views.insert_poojatype,name='insert_poojatype'),
+    path('show_poojatype', views.show_poojatype, name='show_poojatype'),
+    path('update_poojatype/<pid>', views.update_poojatype, name='up_poojatype'),
+    path('delete_poojatype/<pid>', views.delete_poojatype, name='dele_poojatype'),
 
 ]
