@@ -253,7 +253,7 @@ def delete_priest(request,pid):
 
 def insert_pooja(request):
     context={}
-    frm= pooja_form(request.POST or None)
+    frm= pooja_form(request.POST or None,request.FILES)
     pooja=request.POST.get('poojatypeid')
     if pooja_model.objects.filter(poojatypeid=pooja).exists():
         messages.info(request, 'Pooja Type Id Already Exists')
@@ -650,10 +650,12 @@ def delete_enquiry(request,eid):
     obj = get_object_or_404(enquiry_model, id=eid)
     obj.delete()
     return HttpResponseRedirect("/Adhome/show_enquiry")
+
 def view_application(request):
-    context = {}
-    did = request.session["devote_id"]
-    context['view_appli'] = application_model.objects.filter(Status='Inactive')
+    context={}
+
+    context["view_appli"]= application_model.objects.prefetch_related('Devotee_id', 'careerid')
+
     return render(request, "showapplication.html", context)
 
 

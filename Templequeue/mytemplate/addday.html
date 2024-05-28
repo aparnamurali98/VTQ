@@ -1,5 +1,8 @@
 <!DOCTYPE html>
+{% extends 'index.html' %}
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -17,6 +20,7 @@
     </style>
 </head>
 <body>
+{% block content %}
 <form id="f1" method="post" >
     {% csrf_token %}
     <table border="1">
@@ -52,5 +56,6 @@
      {% endfor %}
 </table>
 </form>
+{% endblock content %}
 </body>
 </html>

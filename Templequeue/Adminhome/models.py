@@ -1,8 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-
-
-
 # Create your models here.
 class distric_model(models.Model):
     distname=models.CharField(max_length=40)
@@ -61,7 +58,7 @@ class priest_model(models.Model):
          return self.Pname
 class poojatype_model(models.Model):
     Pooja_type=models.CharField(max_length=20)
-    Photo = models.FileField(upload_to="photos", blank=True)
+
 
     class Meta:
         db_table="poojaTypecategory_model"
@@ -74,6 +71,7 @@ class pooja_model(models.Model):
     pname=models.CharField(max_length=30)
     desc= models.TextField(max_length=100)
     priestid =models.ForeignKey(priest_model, on_delete=models.CASCADE)
+    Photo = models.FileField(upload_to="photos", blank=True)
     amount = models.IntegerField()
     active=models.CharField(max_length=30)
     class Meta:
@@ -95,6 +93,9 @@ class income_model(models.Model):
     inctype = models.CharField(max_length=50)
     class Meta:
         db_table="income_type"
+    def __str__(self):
+        return self.inctype
+
 class month_model(models.Model):
     Month=models.CharField(max_length=30)
     class Meta:

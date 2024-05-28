@@ -20,23 +20,26 @@
     </style>
 </head>
 <body>
+
 <table border="1">
     <tr>
-        <th>Devotee id</th>
-        <th>career id</th>
+        <th>Devotee Name</th>
+        <th>career Title</th>
         <th>Resume </th>
-        <th>Status </th>
+
         <th>Application_date</th>
+        <th>Download Resume</th>
 
     </tr>
     {% for obj in view_appli %}
     <tr>
-        <td>{{obj.Devotee_id}}</td>
-        <td>{{obj.careerid}}</td>
+        <td>{{obj.Devotee_id.dname}}</td>
+        <td>{{obj.careerid.Jobtitle}}</td>
        <td>{{obj.Resume }}</td>
 
-        <td>{{obj.Status}}</td>
+
         <td>{{obj.Application_date}}</td>
+     <td> <a href="{{obj.Resume}}" download>Download</a></td>
 
     </tr>
      {% endfor %}

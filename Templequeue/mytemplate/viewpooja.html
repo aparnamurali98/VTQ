@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 200px;
+        }
+
+        .box img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .box h5 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .box h4 {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .add-to-cart-btn {
+            background-color:#CCF1FF; /* Light green color */
+            color: #333; /* Dark text color */
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+        }
+
+             .add-to-cart-btn:hover {
+            background-color:green;
+        }
+
+          .bag-icon {
+            width: 20px;
+            height: 20px;
+            fill: black;
+            margin-right: 5px;
+        }
+        .image{
+        width: 200px;
+        height: 200px;
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% for obj in pooja_list %}
+        <div class="box">
+            <div class="image">
+        <img src="{{ obj.Photo.url }}" width="200" height="200">
+            </div>
+
+        <h6>{{obj.poojatypeid}}</h6>
+        <h5>{{obj.pname}}</h5>
+        <h4>{{obj.desc}}</h4>
+        <h4>{{obj.priestid}}</h4>
+        <h2>{{obj.amount}}</h2>
+
+                 <a href="{% url 'addtocart' obj.id %}"> Add To cart </a>
+            <svg class="bag-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20 5H4C2.89 5 2 5.89 2 7v10c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V7c0-1.11-.89-2-2-2zm0 12H4V7h16v10z"/>
+            </svg>
+            Add to Cart
+        </button>
+        </div>
+    </div>
+<!--    <tr>-->
+<!--        <th>Image</th>-->
+<!--        <th>pooja type id</th>-->
+<!--        <th>Pooja Name </th>-->
+<!--        <th> Description</th>-->
+<!--        <th> Priest Id</th>-->
+<!--        <th>Amount </th>-->
+
+<!--    </tr>-->
+<!--      -->
+<!--    <tr>-->
+<!--        <td><img src="{{ obj.Photo }}" style="width: 50px; height: 50px;"></td>-->
+<!--        <td>{{obj.poojatypeid}}</td>-->
+<!--        <td>{{obj.pname}}</td>-->
+<!--        <td>{{obj.desc}}</td>-->
+<!--        <td>{{obj.priestid}}</td>-->
+<!--        <td>{{obj.amount}}</td>-->
+<!-- <td>-->
+<!--                <button class="add-to-cart-btn" onclick="addToCart('{{ obj.poojatypeid }}', '{{ obj.pname }}', '{{ obj.amount }}')">-->
+<!--                    <svg class="bag-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">-->
+<!--                        <path d="M19 7H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm-7-5c1.66 0 3 1.34 3 3h-6c0-1.66 1.34-3 3-3zM7 11h2v2H7zm0 3h2v2H7zm4-3h6v8H11z"/>-->
+<!--                    </svg>-->
+<!--                    Add to Cart-->
+<!--                </button>-->
+<!--            </td>-->
+
+
+
+
+<!--    </tr>-->
+     {% endfor %}
+</table>
+ <script>
+        function addToCart(poojaTypeId, poojaName, amount) {
+            alert("Added " + poojaName + " to cart. Amount: " + amount);
+        }
+    </script>
+</form>
+</body>
+</html>

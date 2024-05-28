@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+
+        <table border="1">
+    <tr>
+        <th>Pooja Name</th>
+        <th>Amount</th>
+        <th>Name</th>
+        <th>Star</th>
+
+
+    </tr>
+            <form action="{% url 'add_addtocart'  %}" method="post">
+      {% csrf_token %}
+    {% for obj in poojabook_list %}
+    <tr>
+        <td>{{obj.pooja}}</td>
+         <td>{{obj.pooja.amount}}</td>
+        <td><input type="text" id="name" value="{{obj.Name}}" name="Dname"></td>
+         <td><input type="text" id="star" value="{{obj.star}}" name="star"></td>
+        <td><input type="hidden" id="poojaid" name="poojaid" value="{{obj.id}}"></td>
+        <td><input type="submit" value="add"></td>
+       <td><a href="{% url 'delete_cart' obj.id %}">Delete</a></td>
+
+    </tr>
+{% endfor %}
+  </form>
+            <form action="{% url 'confirm_cart' %}" method="post">
+                {% csrf_token %}
+            <tr>
+                <td>
+                    booking date:<input type="date" name="bdate">
+                   total amount: {{ subtotal }}
+                   <input type="text" id="amount" name="amount" value="{{ subtotal }}">
+                    <button type="submit">Confirm</button>
+                </td>
+
+            </tr>
+                </form>
+        </table>
+
+</body>
+</html>

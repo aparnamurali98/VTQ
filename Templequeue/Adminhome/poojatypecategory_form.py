@@ -8,4 +8,4 @@ class poojatype_form(forms.ModelForm):
 
     class Meta:
         model=poojatype_model
-        fields=('Pooja_type','Photo')
+        fields=('Pooja_type',)
