@@ -1,17 +1,57 @@
 <!DOCTYPE html>
+{% extends  'loginheader.html' %}
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<form id="f1" method="post">
-    {% csrf_token %}
-    <table border="1">
-    <tr><td>username</td><td><input type="text" name="username"></td></tr>
-    <tr><td>password</td><td><input type="password" name="password"></td></tr>
-    </table>
-     <input type="submit" value="login">
-</form>
+{% block content %}
+
+
+    <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <h6 class="section-title text-center text-primary text-uppercase">POOJA Booking</h6>
+                    <h1 class="mb-5">Book A <span class="text-primary text-uppercase">POOJAS</span></h1>
+                </div>
+                <div class="row g-5">
+                    <div class="col-lg-6">
+                        <div class="row g-3">
+                            <div class="col-6 text-end">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.1s" src="{% static 'img/about-11.jpg' %}" style="margin-top: 25%;">
+                            </div>
+
+                            <div class="col-6 text-start">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.7s" src="{% static 'img/about-12.jpg' %}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="wow fadeInUp" data-wow-delay="0.2s">
+                            <form id="f1" method="post">
+                                 {% csrf_token %}
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="name" placeholder="User Name" name="username">
+                                            <label for="name">User Name</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-floating date" id="date3" data-target-input="nearest">
+                                             <input type="password" class="form-control" id="password" placeholder="password" name="password">
+                                            <label for="password">Password</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">Login</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}
 </body>
 </html>

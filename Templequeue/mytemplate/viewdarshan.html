@@ -1,37 +1,27 @@
 <!DOCTYPE html>
+{% extends 'customerheader.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
 
-    </style>
 </head>
 <body>
-
-<table border="1">
+{% block content %}
+<h2>{{ temple.tname }}</h2>
+ <img src="{{ temple.Photo.url }}" alt="{{ temple.tname }}" style="width:100%; max-width:400px;">
+  <table class="table table-striped">
     <tr>
-        <th>ID</th>
+        <th>Day</th>
         <th>TIMINGS</th>
     </tr>
     {% for obj in darshan_list %}
     <tr>
-        <td>{{obj.id}}</td>
+         <td>{{obj.Day}}</td>
         <td>{{obj.Timings}}</td>
     </tr>
      {% endfor %}
 </table>
+{% endblock %}
 </body>
 </html>

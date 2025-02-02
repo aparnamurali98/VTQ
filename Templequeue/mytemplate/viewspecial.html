@@ -1,31 +1,23 @@
 <!DOCTYPE html>
+{% extends 'customerheader.html' %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
+
 
     </style>
 </head>
 <body>
-    <table border="1">
+{% block content %}
+    <table class="table table-striped">
     <tr>
         <th>Title</th>
         <th>Description </th>
         <th> From_date</th>
         <th> To_date</th>
+        <th>Temple Name</th>
         <th>status </th>
     </tr>
     {% for obj in special_list %}
@@ -35,11 +27,13 @@
         <td>{{obj.Description}}</td>
         <td>{{obj.From_date}}</td>
         <td>{{obj.To_date}}</td>
+        <td>{{obj.Temple_name}}</td>
         <td>{{obj.status}}</td>
 
 
     </tr>
      {% endfor %}
 </table>
+{% endblock %}
 </body>
 </html>

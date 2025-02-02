@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+{% extends 'customerheader.html' %}
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 
+{% block content %}
 
-
-        <table border="1">
+       <table class="table table-striped">
     <tr>
         <th>Pooja Name</th>
         <th>Amount</th>
         <th>Name</th>
-        <th>Star</th>
+        <th colspan="5">Star</th>
 
 
     </tr>
@@ -26,25 +27,34 @@
         <td><input type="text" id="name" value="{{obj.Name}}" name="Dname"></td>
          <td><input type="text" id="star" value="{{obj.star}}" name="star"></td>
         <td><input type="hidden" id="poojaid" name="poojaid" value="{{obj.id}}"></td>
-        <td><input type="submit" value="add"></td>
+        <td><input type="submit" value="save"></td>
        <td><a href="{% url 'delete_cart' obj.id %}">Delete</a></td>
 
     </tr>
 {% endfor %}
   </form>
+
             <form action="{% url 'confirm_cart' %}" method="post">
                 {% csrf_token %}
             <tr>
                 <td>
-                    booking date:<input type="date" name="bdate">
+                    booking date:<input type="date" name="bdate"  min="{{ today }}">
+
                    total amount: {{ subtotal }}
-                   <input type="text" id="amount" name="amount" value="{{ subtotal }}">
+                   <input type="text" id="amount" name="amount" value="{{ subtotal }}" style="display:none;">
                     <button type="submit">Confirm</button>
+                </td>
+                <td>
+
+                <td><a href="{% url 'show_pooja' temple_id %}">Add more..</a> </td>
+
+
                 </td>
 
             </tr>
                 </form>
-        </table>
 
+        </table>
+{% endblock content %}
 </body>
 </html>

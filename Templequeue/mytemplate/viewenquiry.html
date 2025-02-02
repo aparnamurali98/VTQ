@@ -1,31 +1,20 @@
 <!DOCTYPE html>
+{% extends 'adminheader.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-        <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
 
-    </style>
 </head>
 <body>
-   <table border="1">
+{% block content %}
+
+   <table class="table table-striped">
     <tr>
         <th>Name</th>
         <th>Email </th>
         <th> Mobile</th>
-        <th>Query </th>
+        <th COLSPAN="6">Query </th>
 
 
 
@@ -39,7 +28,7 @@
         <td>{{obj.Mobile }}</td>
         <td>{{obj.Query}}</td>
 
-        <td><a href="{% url 'more_enq' obj.id%}">more..</a></td>
+        <td><a href="{% url 'more_enq' obj.id%}">Reply..</a></td>
 
         <td><a href="{% url 'dele_enq' obj.id %}"> DELETE </a> </td>
 
@@ -47,5 +36,6 @@
     </tr>
      {% endfor %}
 </table>
+{% endblock content %}
 </body>
 </html>

@@ -1,29 +1,21 @@
 <!DOCTYPE html>
+{% extends 'customerheader.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
 
-    </style>
 </head>
 <body>
-    <table border="1">
+{% block content %}
+<h2>{{ temple.tname }}</h2>
+ <img src="{{ temple.Photo.url }}" alt="{{ temple.tname }}" style="width:100%; max-width:400px;">
+
+ <table class="table table-striped">
     <tr>
-        <th> Pooja ID</th>
-        <th>Day ID</th>
+
+        <th> Pooja Name</th>
+        <th>Day</th>
         <th>Timings</th>
     </tr>
     {% for obj in schedule_list %}
@@ -37,5 +29,7 @@
     </tr>
      {% endfor %}
 </table>
+{% endblock %}
+
 </body>
 </html>

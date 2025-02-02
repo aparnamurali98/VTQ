@@ -1,25 +1,16 @@
 <!DOCTYPE html>
+{% extends 'adminheader.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-       <style>
-        .messages ul,
-        .messages li {
-            list-style-type: none;
-        }
-        .messages {
-            color: red;
-        }
-        .messages li {
-            text-decoration: none;
-        }
-    </style>
+
 </head>
 <body>
+{% block content %}
 <form id="f1" method="post" enctype="multipart/form-data" >
     {% csrf_token %}
-    <table border="1">
+    <table class="table table-striped">
     {{ f.as_table }}
 
         </table>
@@ -37,5 +28,6 @@
 
 
 </form>
+{% endblock content %}
 </body>
 </html>

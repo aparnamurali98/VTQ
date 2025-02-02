@@ -1,37 +1,26 @@
 <!DOCTYPE html>
+{% extends 'customerheader.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
 
-    </style>
 </head>
 <body>
-    <table border="1">
+{% block content %}
+      <table class="table table-striped">
     <tr>
-        <th>Income</th>
+        <th colspan="2">Income</th>
     </tr>
     {% for obj in income_list %}
     <tr>
 
-        <td>{{obj.id}}</td>
+
         <td>{{obj.inctype}}</td>
 
     </tr>
      {% endfor %}
 </table>
+{% endblock %}
 </body>
 </html>

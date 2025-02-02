@@ -1,11 +1,15 @@
 <!DOCTYPE html>
+{% extends 'staffheader.html' %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
- <table border="1">
+{% block content %}
+
+   <table class="table table-striped">
     <tr>
         <th>Staff Income</th>
          <th>Total Staff Income</th>
@@ -15,5 +19,7 @@
         <td>{{ total_pooja_income }}</td>
      </tr>
  </table>
+{% endblock content %}
+
 </body>
 </html>

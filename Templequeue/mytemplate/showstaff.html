@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% extends 'customerheader.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+<table class="table table-striped">
+     {% for obj in staff_list %}
+    <tr>
+        <th>Staff Id</th>
+        <td>{{obj.id}}</td>
+    </tr>
+     <tr>
+         <th>Staff Name</th>
+         <td>{{obj.sname}}</td>
+     </tr>
+       <tr> <th>Address</th>
+            <td>{{obj.address}}</td>
+       </tr>
+       <tr>
+           <th>Email</th>
+           <td>{{obj.email}}</td>
+           </tr>
+     <tr>
+        <th>Mobile</th>
+         <td>{{obj.mobile}}</td>
+     </tr>
+      <tr>
+          <th>Photo</th>
+<!--           <td>{{obj.photo}}</td>-->
+            <td><img src="{{ obj.photo.url }}" alt="{{ obj.sname }}" style="width:100px;height:auto;"></td>
+      </tr>
+     <tr>
+        <th>DOB</th>
+         <td>{{obj.dob}}</td>
+     </tr>
+     <tr>
+        <th>Age</th>
+         <td>{{obj.age}}</td>
+         </tr>
+     <tr>
+        <th>Gender</th>
+         <td>{{obj.gender}}</td>
+     </tr>
+ {% endfor %}
+</table>
+{% endblock %}
+</body>
+</html>

@@ -1,31 +1,25 @@
 <!DOCTYPE html>
+{% extends 'adminheader.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-       <style>
-        .messages ul,
-        .messages li {
-            list-style-type: none;
-        }
-        .messages {
-            color: red;
-        }
-        .messages li {
-            text-decoration: none;
-        }
-    </style>
 </head>
 <body>
-<form id="f1" method="post">
+{% block content %}
+
+<form id="f1" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <table border="1">
+   <table class="table table-striped">
     {{ f.as_table }}
+           <tr>
+           <td> <input type="submit" value="submit"></td>
+       </tr>
 
         </table>
 
 
-     <input type="submit" value="submit">
+
         {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -34,13 +28,14 @@
 
     </ul>
 {% endif %}
-    <table border="1">
+   <table class="table table-striped">
     <tr>
         <th>Refno</th>
         <th>Jobtitle </th>
         <th> Notification</th>
-        <th>notifyfile </th>
-        <th> adddate</th>
+          <th > Adddate</th>
+        <th colspan="7">Notification_file</th>
+
 
 
 
@@ -51,8 +46,10 @@
         <td>{{obj.Refno}}</td>
         <td>{{obj.Jobtitle}}</td>
         <td>{{obj.Notification }}</td>
-        <td>{{obj.notifyfile}}</td>
-        <td>{{obj.adddate }}</td>
+        <td>{{obj.Adddate }}</td>
+        {% if obj.Notification_file %}
+        <td><img src="{{obj.Notification_file.url}}" style="width:100px;height:auto;"></td>
+        {% endif %}
 
         <td><a href="{% url 'up_care' obj.id %}"> UPDATE </a> </td>
         <td><a href="{% url 'dele_care' obj.id %}"> DELETE </a> </td>
@@ -61,5 +58,6 @@
      {% endfor %}
 </table>
 </form>
+{% endblock content %}
 </body>
 </html>

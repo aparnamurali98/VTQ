@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -17,7 +18,6 @@ urlpatterns = [
     path('delete_district/<did>',views.delete_district,name='dele_district'),
     path('update_location/<lid>',views.update_location,name='up_location'),
     path('delete_location/<lid>',views.delete_location,name='dele_location'),
-    path('delete_staff/<sid>', views.delete_staff, name='dele_staff'),
     path('update_templeinfo/<tid>', views.update_templeinfo, name='up_temple'),
     path('delete_templeinfo/<tid>', views.delete_templeinfo, name='dele_temple'),
     path('update_priest/<pid>', views.update_priest, name='up_priest'),
@@ -38,7 +38,7 @@ urlpatterns = [
     path('delete_expense/<eid>', views.delete_expense, name='dele_expense'),
     path('insert_special', views.insert_special, name='special'),
     path('insert_schedule', views.insert_schedule, name='schedule'),
-    path('insert_careers',views.insert_careers,name='careers'),
+    path('insert_careers',views.insert_careers,name='Careers'),
     path('update_schedule/<sid>', views.update_schedule, name='up_sche'),
     path('delete_schedule/<sid>', views.delete_schedule, name='dele_sche'),
     path('update_special/<sid>', views.update_special, name='up_special'),
@@ -48,15 +48,14 @@ urlpatterns = [
     path('insert_darshan', views.insert_darshan, name='darshan'),
     path('update_darshan/<did>', views.update_darshan, name='up_dars'),
     path('delete_darshan/<did>', views.delete_darshan, name='dele_dars'),
-    # path('show_enquiry/', views.show_enquiry, name='enquiry'),
     path('delete_enquiry/<eid>', views.delete_enquiry, name='dele_enq'),
-    path('view_enquiry',views.view_enquiry,name='enquiry'),
+    path('view_enquiry',views.view_enquiry,name='Enquiry'),
     path('more_enquiry/<enid>',views.more_enquiry,name='more_enq'),
-    path('activate_enquiry/<enid>', views.activate_enquiry, name='activate_enquiry'),
     path('view_application',views.view_application,name='view_application'),
     path('insert_poojatype',views.insert_poojatype,name='insert_poojatype'),
     path('show_poojatype', views.show_poojatype, name='show_poojatype'),
     path('update_poojatype/<pid>', views.update_poojatype, name='up_poojatype'),
     path('delete_poojatype/<pid>', views.delete_poojatype, name='dele_poojatype'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='logged_out.html'), name='logout'),
 
 ]

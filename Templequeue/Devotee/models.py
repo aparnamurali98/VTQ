@@ -15,25 +15,17 @@ class application_model(models.Model):
     Application_date= models.DateTimeField(max_length=10,default=django.utils.timezone.now)
     class Meta:
         db_table='Application'
-class poojabook_model(models.Model):
-    Devotee=models.ForeignKey(devotee_model,on_delete=models.CASCADE)
-    pooja=models.ForeignKey(pooja_model,on_delete=models.CASCADE)
-    Name=models.CharField(max_length=30)
-    star = models.CharField(max_length=30)
-    Status=models.CharField(max_length=30,default='cart')
 
-    class Meta:
-        db_table='Pooja_Book'
 
 
 
 class bookingpooja_model(models.Model):
     Devotee=models.ForeignKey(devotee_model,on_delete=models.CASCADE)
     Booking_type=models.CharField(max_length=30,default='online')
-    Want_date = models.DateField()
+    Want_date = models.DateField(null=True)
     booked_date= models.DateTimeField(max_length=10,default=django.utils.timezone.now)
-    Total_amount= models.IntegerField()
-    Status=models.CharField(max_length=30,default='Active')
+    Total_amount= models.IntegerField(null=True)
+    Status=models.CharField(max_length=30,default='New')
     staff = models.ForeignKey(staff_model, on_delete=models.CASCADE,null=True)
 
     class Meta:
@@ -45,14 +37,25 @@ CARD_TYPE=(
     ('upi','UPI'),
     ('netbanking','NETBANKING'),
 )
+
+class poojabook_model(models.Model):
+    Devotee=models.ForeignKey(devotee_model,on_delete=models.CASCADE)
+    booking=models.ForeignKey(bookingpooja_model,on_delete=models.CASCADE,null=True)
+    pooja=models.ForeignKey(pooja_model,on_delete=models.CASCADE,null=True)
+    Name=models.CharField(max_length=30,null=True)
+    star = models.CharField(max_length=30)
+    Status=models.CharField(max_length=30,default='cart')
+
+    class Meta:
+        db_table='Pooja_Book'
 class payment_model(models.Model):
     poojabook = models.ForeignKey(bookingpooja_model, on_delete=models.CASCADE)
     Payment_date=models.DateTimeField(max_length=10,default=django.utils.timezone.now)
     card_type=models.CharField(max_length=20,choices=CARD_TYPE,default='SELECT')
     card_holder_name = models.CharField(max_length=30)
-    Card_number= models.IntegerField()
-    card_exp_date= models.DateField()
-    cvv_number = models.CharField(max_length=3)
+    Card_number= models.BigIntegerField()
+    card_exp_date= models.CharField(max_length=15)
+    cvv_number = models.IntegerField()
     Status=models.CharField(max_length=30,default='paid')
     Total_amount= models.CharField(max_length=20)
 

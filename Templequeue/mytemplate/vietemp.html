@@ -1,29 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+{% extends 'customerheader.html' %}
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
 
-    </style>
 </head>
 <body>
-<table border="1">
+{% block content %}
+
+ <table class="table table-striped">
     <tr>
-        <th>id</th>
-        <th>temple Name</th>
+
+        <th>Temple Name</th>
         <th>Address</th>
         <th>Description</th>
         <th>Contact Name</th>
@@ -32,18 +22,26 @@
     </tr>
     {% for obj in info_list %}
     <tr>
-        <td>{{obj.id}}</td>
+
         <td>{{obj.tname}}</td>
         <td>{{obj.address}}</td>
         <td>{{obj.discription}}</td>
         <td>{{obj.cotname}}</td>
-        <td>{{obj.Photo}}</td>
+        <td><img src="{{ obj.Photo.url }}" alt="{{ obj.tname }}" style="width:100px;height:auto;"></td>
         <td>{{obj.loc}}</td>
+        <td>
+            <!-- Button to view schedule -->
+            <a href="{% url 'Schedule' obj.id %}" class="btn btn-primary">Schedule View</a>
+            <a href="{% url 'Darshan' obj.id %}" class="btn btn-primary">Darshan View</a>
+        </td>
+
+
 
 
 
     </tr>
      {% endfor %}
 </table>
+{% endblock %}
 </body>
 </html>

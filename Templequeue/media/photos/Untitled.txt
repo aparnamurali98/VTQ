@@ -1,0 +1,96 @@
+
+models.py
+from django.db import models
+
+# Create your models here.
+class distric_model(models.Model):
+    distname=models.CharField(max_length=40)
+    def __str__(self):
+        return self.distname
+
+class location_model(models.Model):
+    locname=models.CharField(max_length=30)
+    dist=models.ForeignKey(distric_model,on_delete=models.CASCADE)
+    class Meta:
+        db_table="location"
+settings.py
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'Adminhome'
+
+template
+'DIRS': [os.path.join(BASE_DIR,'Templates')],
+
+'default': {
+
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'templequeue',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',  # or the hostname where your MySQL server is running
+        'PORT': '3306',  # or the port on which your MySQL server is listening
+        "OPTIONS": {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+
+
+templequeurls.py(project url
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('Adhome/',include('Adminhome.urls')),
+]
+
+
+adminurl
+
+from . import views
+from django.urls import path
+
+urlpatterns=[
+
+    path('',views.home,name='home'),
+    path('insert_district',views.insert_district,name='distname'),
+    path('insert_location',views.insert_location,name='locname'),
+
+    ]
+
+district form
+
+from django import forms
+
+from .models import distric_model
+
+
+class dist_form(forms.ModelForm):
+    class Meta:
+        model=distric_model
+        fields=('id','distname')
+
+views.py
+
+from django.http import HttpResponse
+from django.shortcuts import render
+
+from .district_form import dist_form
+from .location_form import loc_form
+
+
+# Create your views here.
+def home (request):
+    return HttpResponse("<a href='insert_district'>District</a>")
+
+def insert_district(request):
+    context={}
+    frm= dist_form(request.POST or None)
+    if frm.is_valid():
+        frm.save()
+    context['f']=frm
+    return render(request,"adddist.html",context)

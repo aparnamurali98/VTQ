@@ -1,58 +1,28 @@
 <!DOCTYPE html>
+{% extends 'adminheader.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-        <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        a {
-            text-decoration: none;
-            color: blue;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-
+    <title>Send Enquiry Email</title>
 </head>
 <body>
-     {% for obj in enquiry_list %}
-<table border="1">
-    <tr>
-        <td>Name</td>
-        <td>{{obj.Name}}</td>
-    </tr>
-     <tr>
-        <td>Email</td>
-        <td>{{obj.Email}}</td>
-    </tr>
-    <tr>
-        <td>Mobile</td>
-        <td>{{obj.Mobile}}</td>
-    </tr>
-    <tr>
-        <td>Query</td>
-        <td>{{obj.Query}}</td>
-    </tr>
-    <tr>
-        <td><a href="{% url 'activate_enquiry' obj.id%}">ACTIVATE</a></td>
-    </tr>
-    {% endfor %}
-</table>
+{% block content %}
+<form method="post" action="{% url 'more_enq' enid %}">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Recipient email address</label>
+        <input type="text" class="form-control" name="email" id="exampleFormControlInput1" placeholder="Recipient email address" value="{{ email }}" readonly>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputSubject" class="form-label">Subject</label>
+        <input type="text" class="form-control" name="subject" id="exampleInputSubject" value="{{ query }}">
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" name="message" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+</form>
+{% endblock content %}
 </body>
 </html>

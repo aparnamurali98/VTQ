@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'customerheader.html' %}
+<head>
+    <meta charset="UTF-8">
+    <title>{{ temple.tname }} - Details</title>
+</head>
+<body>
+{% block content %}
+
+<div class="container mt-4">
+    <!-- Temple Information -->
+    <h2>{{ temple.tname }}</h2>
+    <img src="{{ temple.Photo.url }}" alt="{{ temple.tname }}" style="width:100%; max-width:400px;">
+
+
+
+    <!-- Pooja Schedule Table -->
+    <h6 class="mt-4">Pooja Schedule</h6>
+    <table class="table table-striped">
+        <tr>
+            <th>Pooja Name</th>
+            <th>Day</th>
+            <th>Timings</th>
+        </tr>
+        {% for schedule in schedule_list %}
+        <tr>
+            <td>{{ schedule.poojaid }}</td>
+            <td>{{ schedule.dayid }}</td>
+            <td>{{ schedule.Timings }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Darshan Timings Table -->
+    <h6 class="mt-4">Darshan Timings</h6>
+    <table class="table table-striped">
+        <tr>
+            <th>Day</th>
+            <th>Timings</th>
+        </tr>
+        {% for darshan in darshan_list %}
+        <tr>
+            <td>{{ darshan.Day }}</td>
+            <td>{{ darshan.Timings }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="text-center mt-4">
+        <a href="{% url 'temple' %}" class="btn btn-primary">Back to Temples</a>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>

@@ -1,32 +1,21 @@
 <!DOCTYPE html>
+{% extends 'customerheader.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
 
-    </style>
 </head>
 <body>
-    <table border="1">
+{% block content %}
+    <table class="table table-striped">
     <tr>
         <th>Refno</th>
         <th>Jobtitle </th>
         <th> Notification</th>
-        <th>notifyfile </th>
-        <th> adddate</th>
+        <th>Notification_file </th>
+        <th> Adddate</th>
+<!--        <th> Download Notification file</th>-->
 
 
     </tr>
@@ -36,10 +25,14 @@
         <td>{{obj.Refno}}</td>
         <td>{{obj.Jobtitle}}</td>
         <td>{{obj.Notification }}</td>
-        <td>{{obj.notifyfile}}</td>
-        <td>{{obj.adddate }}</td>
+        {% if obj.Notification_file %}
+        <td><img src="<{{obj.Notification_file.url}}" style="width:100px;height:auto;"><a href="{{obj.Notification_file}}" download>Download</a></td>
+        {% endif %}
+        <td>{{obj.Adddate }}</td>
+<!--         <td> <a href="{{obj.Notification_file}}" download>Download</a></td>-->
         <td><a href="{% url 'application' obj.id %}"> Apply </a> </td>
      {% endfor %}
 </table>
+{% endblock %}
 </body>
 </html>

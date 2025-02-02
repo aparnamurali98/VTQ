@@ -1,69 +1,13 @@
 <!DOCTYPE html>
+{% extends 'customerheader.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 20px;
-        }
 
-        .box {
-            border: 1px solid #ccc;
-            padding: 20px;
-            width: 200px;
-        }
-
-        .box img {
-            width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        .box h5 {
-            margin: 0;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .box h4 {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-
-        .add-to-cart-btn {
-            background-color:#CCF1FF; /* Light green color */
-            color: #333; /* Dark text color */
-            padding: 8px 16px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: background-color 0.3s ease;
-        }
-
-             .add-to-cart-btn:hover {
-            background-color:green;
-        }
-
-          .bag-icon {
-            width: 20px;
-            height: 20px;
-            fill: black;
-            margin-right: 5px;
-        }
-        .image{
-        width: 200px;
-        height: 200px;
-
-    </style>
 </head>
 <body>
+{% block content %}
     <div class="container">
         {% for obj in pooja_list %}
         <div class="box">
@@ -123,5 +67,6 @@
         }
     </script>
 </form>
+{% endblock %}
 </body>
 </html>

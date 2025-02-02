@@ -1,13 +1,16 @@
 <!DOCTYPE html>
+{% extends 'adminheader.html' %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+{% block content %}
 <form id="f1" method="post">
     {% csrf_token %}
-    <table border="1">
+  <table class="table table-striped">
     {{ schedule_data.as_table }}
 
         </table>
@@ -23,5 +26,6 @@
     </ul>
 {% endif %}
 </form>
+{% endblock content %}
 </body>
 </html>

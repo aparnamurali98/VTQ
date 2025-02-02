@@ -7,4 +7,4 @@ class careers_form(forms.ModelForm):
     Status = forms.CharField(label='Status', widget=forms.RadioSelect(choices=Status))
     class Meta:
         model=careers_model
-        fields=('Refno','Jobtitle','Notification','notifyfile','adddate')
+        fields=('Refno','Jobtitle','Notification','Notification_file','Adddate')

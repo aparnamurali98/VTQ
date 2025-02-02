@@ -1,31 +1,25 @@
 <!DOCTYPE html>
+{% extends 'adminheader.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-       <style>
-        .messages ul,
-        .messages li {
-            list-style-type: none;
-        }
-        .messages {
-            color: red;
-        }
-        .messages li {
-            text-decoration: none;
-        }
-    </style>
+
 </head>
+{% block content %}
 <body>
 <form id="f1" method="post" >
     {% csrf_token %}
-    <table border="1">
+<table class="table table-striped">
     {{ f.as_table }}
+    <tr>
+        <td colspan="4"><input type="submit" value="submit"></td>
+    </tr>
 
         </table>
 
 
-     <input type="submit" value="submit">
+
         {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -34,9 +28,9 @@
 
     </ul>
 {% endif %}
-    <table border="1">
+<table class="table table-striped">
     <tr>
-        <th>Transation Mode</th>
+        <th colspan="4">Transation Mode</th>
     </tr>
     {% for obj in trans_list %}
     <tr>
@@ -50,5 +44,6 @@
      {% endfor %}
 </table>
 </form>
+{% endblock content %}
 </body>
 </html>

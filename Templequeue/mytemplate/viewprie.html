@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% extends 'customerheader.html' %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+
+ <table class="table table-striped">
+    <tr>
+        <th>Pname</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Location</th>
+        <th>Jobtype</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Experience</th>
+    </tr>
+    {% for obj in priest_list %}
+    <tr>
+        <td>{{obj.Pname}}</td>
+        <td>{{obj.Age}}</td>
+        <td>{{obj.Address}}</td>
+        <td>{{obj.loc}}</td>
+        <td>{{obj.Jobtype}}</td>
+        <td>{{ obj.Phone}}</td>
+        <td>{{obj.Email}}</td>
+        <td>{{obj.Experience}}</td>
+
+
+
+
+    </tr>
+     {% endfor %}
+</table>
+{% endblock %}
+</body>
+</html>

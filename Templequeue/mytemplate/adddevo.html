@@ -1,22 +1,128 @@
 <!DOCTYPE html>
-{% extends 'index.html' %}
-<html lang="en">
+{% extends  'loginheader.html' %}
+{% load static %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 {% block content %}
-<form id="f1" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <table border="1">
-    {{ f.as_table }}
-
-        </table>
 
 
-     <input type="submit" value="submit">
-        {% if messages %}
+
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <h6 class="section-title text-center text-primary text-uppercase">POOJA BOOKING</h6>
+                    <h1 class="mb-5">Book A <span class="text-primary text-uppercase">POOJAS</span></h1>
+                </div>
+                <div class="row g-5">
+                    <div class="col-lg-6">
+                        <div class="row g-3">
+                            <div class="col-6 text-end">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.1s" src="{% static 'img/about-11.jpg' %}" style="margin-top: 25%;">
+                            </div>
+                            <div class="col-6 text-start">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.3s" src="{% static 'img/about-12.jpg' %}">
+                            </div>
+                            <div class="col-6 text-end">
+                                <img class="img-fluid rounded w-50 wow zoomIn" data-wow-delay="0.5s" src="{% static 'img/about-13.jpg' %}">
+                            </div>
+                            <div class="col-6 text-start">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.7s" src="{% static 'img/about-14.jpg' %}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="wow fadeInUp" data-wow-delay="0.2s">
+                            <form id="f1" method="post" enctype="multipart/form-data">
+                                 {% csrf_token %}
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="name" placeholder="Devotee Name" name="dname">
+                                            <label for="name">Devotee Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                             <textarea class="form-control" placeholder="Address" id="address" style="height: 100px" name="address"></textarea>
+                                            <label for="address">Address</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating date" id="age" data-target-input="nearest">
+                                            <input type="text" class="form-control " id="checkin" placeholder="Age" data-target="#date3" data-toggle="datetimepicker" name="age" />
+                                            <label for="age">Age</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating date" id="photo" data-target-input="nearest">
+                                            <input type="file" class="form-control " id="checkout" placeholder="photo" data-target="#date4" data-toggle="datetimepicker" name="photo" />
+                                            <label for="photo">Photo</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="select1" name="gender">
+                                              <option value="1">Male</option>
+                                              <option value="2">Female</option>
+                                              <option value="3">Other</option>
+                                            </select>
+                                            <label for="select1">Select Gender</label>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                             <input type="text" class="form-control" id="star" placeholder="Star" name="star">
+                                            <label for="star">Star</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="email" placeholder="Your Email" name="email">
+                                            <label for="email">Your Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                             <input type="number" class="form-control" id="mobile" placeholder="Phone Number" name="mobile">
+                                            <label for="mobile">Phone Number</label>
+                                        </div>
+                                    </div>
+                                       <div class="col-md-6">
+                                        <div class="form-floating">
+                                       <select class="form-control" id="loc"  name="loc">
+
+                                            <option >choose location</option>
+                                                 {% for obj in loc %}
+                                                <option value="{{ obj.id }}"> {{ obj.locname }}</option>
+                                                {% endfor %}
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                     <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="username" placeholder="User Name" name="username">
+                                            <label for="username">User Name</label>
+                                        </div>
+                                    </div>
+                                     <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="password" placeholder="password" name="password">
+                                            <label for="password">Password</label>
+                                        </div>
+                                    </div>
+                                      <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="confirm password" placeholder="Confirm Password" name="confirm_password">
+                                            <label for="confirm password">Confirm Password</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">Register</button>
+                                        {% if messages %}
     <font color="red"><h4>
     <ul class="messages">
         {% for message in messages %}
@@ -27,8 +133,19 @@
     </h4>
     </font>
 {% endif %}
+                                    </div>
+                                </div>
 
-</form>
-{% endblock content %}
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+{% endblock %}
+
 </body>
 </html>

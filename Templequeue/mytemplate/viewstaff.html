@@ -1,12 +1,17 @@
 <!DOCTYPE html>
+{% extends 'staffheader.html' %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Staff Details</title>
+
 
 </head>
 <body>
- <table border="1">
+{% block content %}
+
+ <table class="table table-striped">
      {% for obj in staff_list %}
     <tr>
         <th>Staff Id</th>
@@ -29,7 +34,8 @@
      </tr>
       <tr>
           <th>Photo</th>
-           <td>{{obj.photo}}</td>
+<!--         <td>{{obj.photo}}</td>-->
+          <td><img src="{{ obj.photo.url }}" alt="{{ obj.sname }}" style="width:100px;height:auto;"></td>
       </tr>
      <tr>
         <th>DOB</th>
@@ -45,12 +51,13 @@
      </tr>
 
     <tr>
+         <td colspan="2" style="text-align: center;">
         <td><a href="{% url 'up_staff' obj.id %}"> UPDATE </a> </td>
-
 
 
     </tr>
      {% endfor %}
 </table>
+{% endblock %}
 </body>
 </html>

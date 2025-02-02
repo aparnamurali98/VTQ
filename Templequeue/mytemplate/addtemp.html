@@ -1,28 +1,24 @@
 <!DOCTYPE html>
+{% extends 'adminheader.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-       <style>
-        .messages ul,
-        .messages li {
-            list-style-type: none;
-        }
-        .messages {
-            color: red;
-        }
-        .messages li {
-            text-decoration: none;
-        }
-    </style>
+
 </head>
+{% block content %}
 <body>
 <form id="f1" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <table border="1">
+   <table class="table table-striped">
     {{ f.as_table }}
+       <tr>
+           <td colspan="9">
+           <input type="submit" value="submit">
+           </td>
+       </tr>
         </table>
-     <input type="submit" value="submit">
+
         {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -30,26 +26,33 @@
         {% endfor %}
     </ul>
 {% endif %}
-<table border="1">
+<table class="table table-striped">
     <tr>
-        <th> id</th>
+
         <th>temple Name</th>
         <th>Address</th>
         <th>Description</th>
         <th>Contact Name</th>
          <th>Image</th>
-        <th>Location</th>
+        <th>Pooja</th>
+        <th colspan="9">Location</th>
 
     </tr>
     {% for obj in info_list %}
     <tr>
-        <td>{{obj.id}}</td>
+
         <td>{{obj.tname}}</td>
         <td>{{obj.address}}</td>
         <td>{{obj.discription}}</td>
         <td>{{obj.cotname}}</td>
-        <td>{{obj.Photo}}</td>
+         {% if obj.Photo %}
+        <td><img src="{{ obj.Photo.url }}" alt="{{ obj.tname }}" style="width:100px;height:auto;"></td>
+        {% endif %}
+       <td> {% for pub  in obj.Pooja.all %}
+            <li>{{ pub.pname }}</li>
+        {% endfor %}</td>
         <td>{{obj.loc}}</td>
+
         <td><a href="{% url 'up_temple' obj.id %}"> UPDATE </a> </td>
         <td><a href="{% url 'dele_temple' obj.id %}"> DELETE </a> </td>
 
@@ -58,5 +61,6 @@
      {% endfor %}
 </table>
 </form>
+{% endblock content %}
 </body>
 </html>

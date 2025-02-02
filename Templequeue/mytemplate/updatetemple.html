@@ -1,13 +1,17 @@
 <!DOCTYPE html>
+{% extends 'adminheader.html' %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<form id="f1" method="post" enctype="multipart/form-data">
+{% block content %}
+
+<form id="f1" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <table border="1">
+  <table class="table table-striped">
     {{ info_data.as_table }}
 
         </table>
@@ -15,5 +19,7 @@
 
      <input type="submit" value="update">
 </form>
+{% endblock content %}
+
 </body>
 </html>
