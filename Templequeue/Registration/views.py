@@ -31,8 +31,6 @@ def insert_devotee(request):
             devuconfirm_password = request.POST.get('confirm_password')
             if devuconfirm_password==devupassword:
 
-
-
                 devloc = request.POST.get('loc')
                 print(devloc,'location')
                 locid = location_model.objects.get(id=devloc)
@@ -47,9 +45,6 @@ def insert_devotee(request):
             error_message = ex
 
             messages.error(request,error_message)
-
-
-
     context['loc'] =location_model.objects.all()
     return render(request,"adddevo.html",context)
 def insert_enquiry(request):
