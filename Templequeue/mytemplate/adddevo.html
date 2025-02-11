@@ -39,59 +39,55 @@
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="name" placeholder="Devotee Name" name="dname">
+                                            <input type="text" class="form-control" id="name" placeholder="Devotee Name" name="dname" required>
                                             <label for="name">Devotee Name</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                             <textarea class="form-control" placeholder="Address" id="address" style="height: 100px" name="address"></textarea>
+                                             <textarea class="form-control" placeholder="Address" id="address" style="height: 100px" name="address" required></textarea>
                                             <label for="address">Address</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating date" id="age" data-target-input="nearest">
-                                            <input type="text" class="form-control " id="checkin" placeholder="Age" data-target="#date3" data-toggle="datetimepicker" name="age" />
+                                            <input type="text" class="form-control " id="checkin" placeholder="Age" data-target="#date3" data-toggle="datetimepicker" name="age" required/>
                                             <label for="age">Age</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating date" id="photo" data-target-input="nearest">
-                                            <input type="file" class="form-control " id="checkout" placeholder="photo" data-target="#date4" data-toggle="datetimepicker" name="photo" />
-                                            <label for="photo">Photo</label>
-                                        </div>
-                                    </div>
+
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                            <select class="form-select" id="select1" name="gender">
-                                              <option value="1">Male</option>
-                                              <option value="2">Female</option>
-                                              <option value="3">Other</option>
+                                            <select class="form-select" id="select1" name="gender" required>
+                                                <option value="0" >--select--</option>
+                                              <option value="Male">Male</option>
+                                              <option value="Female">Female</option>
+                                              <option value="Other">Other</option>
                                             </select>
                                             <label for="select1">Select Gender</label>
                                           </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                             <input type="text" class="form-control" id="star" placeholder="Star" name="star">
+                                             <input type="text" class="form-control" id="star" placeholder="Star" name="star" required>
                                             <label for="star">Star</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="email" class="form-control" id="email" placeholder="Your Email" name="email">
+                                            <input type="email" class="form-control" id="email" placeholder="Your Email" name="email" required>
                                             <label for="email">Your Email</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                             <input type="number" class="form-control" id="mobile" placeholder="Phone Number" name="mobile">
+                                             <input type="number" class="form-control" id="mobile" placeholder="Phone Number" name="mobile" required>
                                             <label for="mobile">Phone Number</label>
                                         </div>
                                     </div>
                                        <div class="col-md-6">
                                         <div class="form-floating">
-                                       <select class="form-control" id="loc"  name="loc">
+                                       <select class="form-control" id="loc"  name="loc" required>
 
                                             <option >choose location</option>
                                                  {% for obj in loc %}
@@ -103,19 +99,19 @@
                                     </div>
                                      <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="username" placeholder="User Name" name="username">
+                                            <input type="text" class="form-control" id="username" placeholder="User Name" name="username" required>
                                             <label for="username">User Name</label>
                                         </div>
                                     </div>
                                      <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="password" class="form-control" id="password" placeholder="password" name="password">
+                                            <input type="password" class="form-control" id="password" placeholder="password" name="password" required>
                                             <label for="password">Password</label>
                                         </div>
                                     </div>
                                       <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="password" class="form-control" id="confirm password" placeholder="Confirm Password" name="confirm_password">
+                                            <input type="password" class="form-control" id="confirm password" placeholder="Confirm Password" name="confirm_password" required>
                                             <label for="confirm password">Confirm Password</label>
                                         </div>
                                     </div>

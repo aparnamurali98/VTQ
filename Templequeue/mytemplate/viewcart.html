@@ -24,8 +24,8 @@
     <tr>
         <td>{{obj.pooja}}</td>
          <td>{{obj.pooja.amount}}</td>
-        <td><input type="text" id="name" value="{{obj.Name}}" name="Dname"></td>
-         <td><input type="text" id="star" value="{{obj.star}}" name="star"></td>
+        <td><input type="text" id="name" value="{{obj.Name}}" name="Dname" required></td>
+         <td><input type="text" id="star" value="{{obj.star}}" name="star" required></td>
         <td><input type="hidden" id="poojaid" name="poojaid" value="{{obj.id}}"></td>
         <td><input type="submit" value="save"></td>
        <td><a href="{% url 'delete_cart' obj.id %}">Delete</a></td>

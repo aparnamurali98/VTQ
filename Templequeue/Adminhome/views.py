@@ -8,7 +8,6 @@ from .careers_form import careers_form
 from .darshan_form import darsh_form
 from .day_form import day_form
 from .district_form import dist_form
-
 from .expensetype_form import expense_form
 from .incometype_form import income_form
 from .location_form import loca_form
@@ -25,11 +24,8 @@ from .staff_form import staf_form
 from .templeinfo_form import temple_form
 from .transfertype_form import transf_form
 from Registration.models import enquiry_model
-
 from Registration.models import role_model
-
 from Registration.enquiry_form import enquiry_form
-
 from Devotee.models import application_model
 
 

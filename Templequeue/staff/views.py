@@ -16,7 +16,7 @@ from Registration.models import devotee_model
 from Adminhome.models import income_model
 from Devotee.models import bookingpooja_model
 from .income_form import incomes_form
-from staff.models import incomes_model
+from staff.models import incomes_models
 
 
 def home (request):
@@ -91,15 +91,19 @@ def incomes(request):
                 Amount = request.POST.get('Amount')
                 income_typeid = frm.cleaned_data['income_typeid']
                 Narration = request.POST.get('Narration')
+                Temple_name= frm.cleaned_data['Temple_name']
+
 
                 # Create a new income record
-                incomes_model.objects.create(
+                incomes_models.objects.create(
                     income_typeid=income_typeid,
                     income_date=income_date,
                     Amount=Amount,
                     Narration=Narration,
-                    staff=staff
+                    staff=staff,
+                    Temple_name=Temple_name
                 )
+
 
                 # Redirect to the incomes page after successful form submission
                 return HttpResponseRedirect('/staff_home/incomes')
@@ -119,9 +123,28 @@ def incomes(request):
 def view_income(request):
     context = {}
 
-    total_staff_income = incomes_model.objects.filter(staff__isnull=False).aggregate(total=Sum('Amount'))['total']
-    total_pooja_income = incomes_model.objects.filter(Bookingpooja__isnull=False).aggregate(total=Sum('Amount'))['total']
+    total_staff_income = incomes_models.objects.filter(staff__isnull=False).aggregate(total=Sum('Amount'))['total']
+    total_pooja_income = incomes_models.objects.filter(Bookingpooja__isnull=False).aggregate(total=Sum('Amount'))['total']
     context['total_staff_income'] = total_staff_income
     context['total_pooja_income'] = total_pooja_income
     return render(request, "viewincometotal.html", context)
 
+# def pooja_booking(request):
+#     context = {}
+#
+#     try:
+#         # Retrieve all temple information records from the database
+#         context['booking'] = poojabook_model.objects.values(
+#             'Devotee',  # Devotee ID
+#             'pooja',  # Pooja Name
+#             'Name',  # Name
+#             'star'  # Star
+#         )
+#
+#     except Exception as ex:
+#         # Handle any unexpected exceptions
+#         messages.error(request, f"An error occurred while fetching temple information: {str(ex)}")
+#
+#     # Render the template with the context data
+#     return render(request, "viewbooking.html", context)
+#

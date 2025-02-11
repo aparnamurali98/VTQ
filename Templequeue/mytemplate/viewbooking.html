@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% extends 'staffheader.html' %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+
+   <table class="table table-striped">
+   <tr>
+
+        <th>Devotee Name</th>
+        <th>Pooja Name</th>
+        <th>Name</th>
+        <th>Star</th>
+    </tr>
+
+    {% for obj in booking %}
+    <tr>
+
+        <td>{{ obj.Devotee__name }}</td>
+        <td>{{ obj.Pooja__Pooja_name }}</td>
+        <td>{{ obj.Name }}</td>
+        <td>{{ obj.star }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content %}
+</body>
+</html>

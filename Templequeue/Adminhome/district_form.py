@@ -8,3 +8,5 @@ class dist_form(forms.ModelForm):
     class Meta:
         model=distric_model
         fields=('id','distname')
+
+

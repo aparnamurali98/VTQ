@@ -21,8 +21,6 @@ def insert_devotee(request):
             addre=request.POST.get('address')
             devage=request.POST.get('age')
             devgender=request.POST.get('gender')
-            File1 = request.FILES['photo']
-            devphoto=File1.name
             devstar = request.POST.get('star')
             devemail = request.POST.get('email')
             devmobile = request.POST.get('mobile')
@@ -36,17 +34,18 @@ def insert_devotee(request):
                 locid = location_model.objects.get(id=devloc)
                 loginid=User.objects.create_user(username=devusername,password=devupassword)
                 role=role_model.objects.create(login=loginid,roletype=2)
-                devoteereg=devotee_model.objects.create(dname=devname,address=addre,age=devage,gender=devgender,photo=devphoto,star=devstar,email=devemail,mobile=devmobile,loc=locid,login=loginid)
+                devoteereg=devotee_model.objects.create(dname=devname,address=addre,age=devage,gender=devgender,star=devstar,email=devemail,mobile=devmobile,loc=locid,login=loginid)
                 return HttpResponseRedirect('/login')
             else:
                 messages.error(request,"password does not match")
         except Exception as ex:
-            # error_message="User Name Alredy Exists"
-            error_message = ex
+            error_message="User Name Alredy Exists"
+            # error_message = ex
 
             messages.error(request,error_message)
     context['loc'] =location_model.objects.all()
     return render(request,"adddevo.html",context)
+
 def insert_enquiry(request):
     context = {}
 

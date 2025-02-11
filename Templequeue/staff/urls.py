@@ -7,5 +7,6 @@ urlpatterns = [
     path('update_staff/<sid>', views.update_staff, name='up_staff'),
     path('incomes', views.incomes, name='insert_incomes'),
     path('view_income', views.view_income, name='view_income'),
+    # path('pooja_booking/', views.pooja_booking, name='view_booking'),
 
 ]

@@ -33,7 +33,7 @@ from Registration.models import devotee_model
 from Adminhome.models import pooja_model
 
 from staff.income_form import incomes_form
-from staff.models import incomes_model
+from staff.models import incomes_models
 
 from Adminhome.models import priest_model
 
@@ -546,7 +546,7 @@ def payment(request, pid,subtotal):
         typeid = income_model.objects.get(pk=10)
         pooja_booking = bookingpooja_model.objects.get(pk=pid)
         payment = payment_model.objects.create(poojabook=pooja_booking, card_type=card_type, card_holder_name=card_holder_name, Card_number=card_number, card_exp_date=card_exp_date, cvv_number=cvv_number, Total_amount=total_amount)
-        incomes = incomes_model.objects.create(Devotee=devote_object,Bookingpooja=pooja_booking, income_typeid=typeid, income_date=income_date,Amount=total_amount, Narration=Narration)
+        incomes = incomes_models.objects.create(Devotee=devote_object,Bookingpooja=pooja_booking, income_typeid=typeid, income_date=income_date,Amount=total_amount, Narration=Narration)
         url = reverse('receipt', kwargs={'pid':pid })
         return redirect(url)
 
