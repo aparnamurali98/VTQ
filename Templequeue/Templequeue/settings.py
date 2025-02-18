@@ -149,3 +149,8 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'virtualtemplequeue@gmail.com'
 EMAIL_HOST_PASSWORD ='zebf mzvd xrrb wros'
+
+TWILIO_ACCOUNT_SID = "your_account_sid"  # Replace with your actual Twilio Account SID
+TWILIO_AUTH_TOKEN = "your_auth_token"  # Replace with your Twilio Auth Token
+TWILIO_PHONE_NUMBER = "+your_twilio_number"  # Replace with your Twilio phone number
+

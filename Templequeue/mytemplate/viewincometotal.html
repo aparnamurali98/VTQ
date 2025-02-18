@@ -10,14 +10,20 @@
 {% block content %}
 
    <table class="table table-striped">
+
     <tr>
-        <th>Staff Income</th>
-         <th>Total Staff Income</th>
+        <th>Temple Name</th>
+         <th>Temple Income Type</th>
+        <th>Total Amount</th>
     </tr>
+       {% for obj in staff_income %}
      <tr>
-      <td>{{ total_staff_income }}</td>
-        <td>{{ total_pooja_income }}</td>
+      <td>{{obj.Temple_name__tname}}</td>
+        <td>{{obj.income_typeid__inctype}}</td>
+         <td>{{obj.total_amount}}</td>
      </tr>
+            {% endfor %}
+
  </table>
 {% endblock content %}
 

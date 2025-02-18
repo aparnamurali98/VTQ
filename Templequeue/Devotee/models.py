@@ -46,6 +46,7 @@ class poojabook_model(models.Model):
     star = models.CharField(max_length=30)
     Status=models.CharField(max_length=30,default='cart')
 
+
     class Meta:
         db_table='Pooja_Book'
 class payment_model(models.Model):

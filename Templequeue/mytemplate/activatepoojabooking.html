@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% extends 'staffheader.html' %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+
+<form method="post" action="{% url 'more_enq' enid %}">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Recipient email address</label>
+        <input type="text" class="form-control" name="email" id="exampleFormControlInput1" placeholder="Recipient email address" value="{{ email }}" readonly>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputSubject" class="form-label">Subject</label>
+        <input type="text" class="form-control" name="subject" id="exampleInputSubject" value="{{ query }}">
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" name="message" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+</form>
+{% endblock content %}
+
+</body>
+</html>

@@ -78,7 +78,7 @@
                     <div class="mb-3">
                         <p class="dis fw-bold mb-2">card type</p>
 
-                        <select name="card_type">
+                        <select name="card_type" required>
                             <option value="0">--select--</option>
                             <option value="credit">Credit Card</option>
                             <option value="debit">Debit Card</option>
@@ -88,21 +88,21 @@
                     </div>
                     <div class="mb-3">
                         <p class="dis fw-bold mb-2">Email address</p>
-                        <input class="form-control" type="email" value="luke@skywalker.com">
+                        <input class="form-control" type="email"  required>
                     </div>
                     <div>
                         <p class="dis fw-bold mb-2">Card details</p>
                         <div class="d-flex align-items-center justify-content-between card-atm border rounded">
                             <div class="fab fa-cc-visa ps-3"></div>
-                            <input type="text" class="form-control" placeholder="Card Details" name="Card_number">
+                            <input type="text" class="form-control" placeholder="Card Details" name="Card_number" >
                             <div class="d-flex w-50">
-                                <input type="text" class="form-control px-0" placeholder="MM/YY" name="card_exp_date">
+                                <input type="text" class="form-control px-0" placeholder="MM/YY" name="card_exp_date" >
                                 <input type="password" maxlength=3 class="form-control px-0" placeholder="CVV" name="cvv_number">
                             </div>
                         </div>
                         <div class="my-3 cardname">
                             <p class="dis fw-bold mb-2">Cardholder name</p>
-                            <input class="form-control" type="text" name="card_holder_name">
+                            <input class="form-control" type="text" name="card_holder_name" required>
                         </div>
                         <div class="address">
 

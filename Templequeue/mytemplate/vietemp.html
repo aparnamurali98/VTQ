@@ -32,7 +32,14 @@
         <td>
             <!-- Button to view schedule -->
             <a href="{% url 'Schedule' obj.id %}" class="btn btn-primary">Schedule View</a>
-            <a href="{% url 'Darshan' obj.id %}" class="btn btn-primary">Darshan View</a>
+<!--            <a href="{% url 'Darshan' obj.id %}" class="btn btn-outline">Darshan View</a>-->
+           <a href="{% url 'Darshan' obj.id %}"
+   class="btn btn-outline"
+   style="background-color: #ff5733; color: white; border-color: #ff5733;">
+   Darshan View
+</a>
+
+
         </td>
 
 

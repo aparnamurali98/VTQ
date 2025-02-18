@@ -10,7 +10,11 @@
      <script>
         function printPage() {
             window.print();
-        }
+            }
+            window.onafterprint = function() {
+        window.location.href = "{% url 'dev_home' %}"; // Replace 'home' with your actual home page URL name
+    };
+
     </script>
 </head>
 <body>

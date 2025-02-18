@@ -537,9 +537,6 @@ def payment(request, pid,subtotal):
         card_number = request.POST.get('Card_number')
         card_exp_date = request.POST.get('card_exp_date')
         cvv_number = request.POST.get('cvv_number')
-        if not all([card_type, card_holder_name, card_number, card_exp_date, cvv_number]):
-            messages.error(request, "All fields are required!")
-            return redirect(request.path)
         total_amount = subtotal
         income_date=django.utils.timezone.now()
         Narration='pooja booking'

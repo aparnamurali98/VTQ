@@ -1,4 +1,5 @@
 import datetime
+import django.utils.timezone
 
 from django.contrib import messages
 from django.db.models import Sum
@@ -14,7 +15,7 @@ from staff.staff_form import staff_form
 from Registration.models import devotee_model
 
 from Adminhome.models import income_model
-from Devotee.models import bookingpooja_model
+from Devotee.models import bookingpooja_model,poojabook_model
 from .income_form import incomes_form
 from staff.models import incomes_models
 
@@ -123,23 +124,37 @@ def incomes(request):
 def view_income(request):
     context = {}
 
-    total_staff_income = incomes_models.objects.filter(staff__isnull=False).aggregate(total=Sum('Amount'))['total']
-    total_pooja_income = incomes_models.objects.filter(Bookingpooja__isnull=False).aggregate(total=Sum('Amount'))['total']
-    context['total_staff_income'] = total_staff_income
-    context['total_pooja_income'] = total_pooja_income
+    staff_income = (
+        incomes_models.objects
+        .select_related('Temple_name', 'income_typeid')
+        .values('income_typeid__inctype', 'Temple_name__tname')
+        .annotate(total_amount=Sum('Amount'))
+    )
+    context['staff_income'] = staff_income
     return render(request, "viewincometotal.html", context)
+
+def pooja_booking(request):
+    context = {}
+
+    try:
+
+        context['booking'] = poojabook_model.objects.select_related(
+            'Devotee', 'booking', 'pooja'
+        ).filter(booking__Want_date__gt=django.utils.timezone.now().date())
+
+    except Exception as ex:
+        # Handle any unexpected exceptions
+        messages.error(request, f"An error occurred while fetching temple information: {str(ex)}")
+
+    # Render the template with the context data
+    return render(request, "viewbooking.html", context)
 
 # def pooja_booking(request):
 #     context = {}
 #
 #     try:
 #         # Retrieve all temple information records from the database
-#         context['booking'] = poojabook_model.objects.values(
-#             'Devotee',  # Devotee ID
-#             'pooja',  # Pooja Name
-#             'Name',  # Name
-#             'star'  # Star
-#         )
+#         context['info_list'] = poojabook_model.objects.all()
 #
 #     except Exception as ex:
 #         # Handle any unexpected exceptions
@@ -147,4 +162,43 @@ def view_income(request):
 #
 #     # Render the template with the context data
 #     return render(request, "viewbooking.html", context)
-#
+
+def reply_poojabooking(request, enid):
+    if request.method == "POST":
+        try:
+            obj = get_object_or_404(poojabook_model, id=enid)
+
+            # Update the status of the enquiry to 'read'
+            obj.Status = 'read'
+            obj.save()  # Save the changes to the database
+
+            # Email sending logic
+            with get_connection(
+                host=settings.EMAIL_HOST,
+                port=settings.EMAIL_PORT,
+                username=settings.EMAIL_HOST_USER,
+                password=settings.EMAIL_HOST_PASSWORD,
+                use_tls=settings.EMAIL_USE_TLS
+            ) as connection:
+                subject = request.POST.get("subject")
+                email_from = settings.EMAIL_HOST_USER
+                recipient_list = [request.POST.get("email")]
+                message = request.POST.get("message")
+                EmailMessage(subject, message, email_from, recipient_list, connection=connection).send()
+            return HttpResponse(
+                "<script>alert('Email sent successfully!');window.location='/staff_home/pooja_booking';</script>")
+
+
+        except Exception as e:
+            print(f"Error sending email: {e}")
+            return HttpResponse(f"Failed to send email: {e}")
+
+    else:
+        # Fetch the enquiry details to pre-fill the form
+        obj = get_object_or_404(poojabook_model, id=enid)
+        context = {
+            'enid': enid,
+            'email':obj.Devotee.email,   # Fetch the email
+
+        }
+        return render(request, 'activatepoojabooking.html', context)
