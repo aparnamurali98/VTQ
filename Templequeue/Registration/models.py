@@ -15,6 +15,7 @@ class devotee_model(models.Model):
     mobile = models.BigIntegerField()
     loc = models.ForeignKey(location_model, on_delete=models.CASCADE)
     login=models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+
     def __str__(self):
          return self.dname
 

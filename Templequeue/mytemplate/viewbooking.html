@@ -27,7 +27,7 @@
         <td>{{ obj.booking.Want_date }}</td>
         <td>{{ obj.Name}}</td>
         <td>{{ obj.star }}</td>
-         <td><a href="{% url 'reply_poojabooking' obj.id%}">Reply..</a></td>
+          <td> <a href="{% url 'reply' obj.id %}" class="btn btn-primary">Reply</a></td>
     </tr>
     {% endfor %}
 </table>

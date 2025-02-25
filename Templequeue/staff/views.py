@@ -18,6 +18,12 @@ from Adminhome.models import income_model
 from Devotee.models import bookingpooja_model,poojabook_model
 from .income_form import incomes_form
 from staff.models import incomes_models
+from django.core.mail import EmailMessage, get_connection
+from django.conf import settings
+from django.core.mail import send_mail
+
+
+
 
 
 def home (request):
@@ -149,30 +155,14 @@ def pooja_booking(request):
     # Render the template with the context data
     return render(request, "viewbooking.html", context)
 
-# def pooja_booking(request):
-#     context = {}
-#
-#     try:
-#         # Retrieve all temple information records from the database
-#         context['info_list'] = poojabook_model.objects.all()
-#
-#     except Exception as ex:
-#         # Handle any unexpected exceptions
-#         messages.error(request, f"An error occurred while fetching temple information: {str(ex)}")
-#
-#     # Render the template with the context data
-#     return render(request, "viewbooking.html", context)
+def staff_reply(request, booking_id):
+    booking = get_object_or_404(poojabook_model, id=booking_id)
 
-def reply_poojabooking(request, enid):
     if request.method == "POST":
         try:
-            obj = get_object_or_404(poojabook_model, id=enid)
+            reply_message = request.POST.get("reply")
 
-            # Update the status of the enquiry to 'read'
-            obj.Status = 'read'
-            obj.save()  # Save the changes to the database
-
-            # Email sending logic
+            # **Email Sending**
             with get_connection(
                 host=settings.EMAIL_HOST,
                 port=settings.EMAIL_PORT,
@@ -180,25 +170,17 @@ def reply_poojabooking(request, enid):
                 password=settings.EMAIL_HOST_PASSWORD,
                 use_tls=settings.EMAIL_USE_TLS
             ) as connection:
-                subject = request.POST.get("subject")
+                subject = "Reply to Your Pooja Booking"
                 email_from = settings.EMAIL_HOST_USER
-                recipient_list = [request.POST.get("email")]
-                message = request.POST.get("message")
-                EmailMessage(subject, message, email_from, recipient_list, connection=connection).send()
-            return HttpResponse(
-                "<script>alert('Email sent successfully!');window.location='/staff_home/pooja_booking';</script>")
+                recipient_list = [booking.Devotee.email]
+                email = EmailMessage(subject, reply_message, email_from, recipient_list, connection=connection)
+                email.send()
 
+            return HttpResponse("<script>alert('Reply sent successfully via Email!');window.location='/staff_home/pooja_booking';</script>")
 
         except Exception as e:
-            print(f"Error sending email: {e}")
-            return HttpResponse(f"Failed to send email: {e}")
+            print(f"Error sending reply: {e}")
+            return HttpResponse(f"Failed to send reply: {e}")
 
-    else:
-        # Fetch the enquiry details to pre-fill the form
-        obj = get_object_or_404(poojabook_model, id=enid)
-        context = {
-            'enid': enid,
-            'email':obj.Devotee.email,   # Fetch the email
+    return render(request, "staf_reply.html", {"booking": booking})
 
-        }
-        return render(request, 'activatepoojabooking.html', context)

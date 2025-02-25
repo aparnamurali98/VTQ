@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% extends 'staffheader.html' %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Send Reply to Devotee</title>
+</head>
+<body>
+{% block content %}
+<form method="post" action="{% url 'reply' booking.id %}">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="recipientEmail" class="form-label">Recipient Email Address</label>
+        <input type="text" class="form-control" name="email" id="recipientEmail" value="{{ booking.Devotee.email }}" readonly>
+    </div>
+    <div class="mb-3">
+        <label for="subject" class="form-label">Subject</label>
+        <input type="text" class="form-control" name="subject" id="subject" value="Reply to your Pooja Booking" readonly>
+    </div>
+    <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        <textarea class="form-control" id="message" name="reply" rows="3" readonly>Your pooja has been successfully booked. Thank you!</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+</form>
+{% endblock content %}
+</body>
+</html>

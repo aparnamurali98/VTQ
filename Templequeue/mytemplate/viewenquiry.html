@@ -28,9 +28,10 @@
         <td>{{obj.Mobile }}</td>
         <td>{{obj.Query}}</td>
 
-        <td><a href="{% url 'more_enq' obj.id%}">Reply..</a></td>
+        <td> <a href="{% url 'more_enq' obj.id %}" class="btn btn-primary">Reply</a></td>
 
-        <td><a href="{% url 'dele_enq' obj.id %}"> DELETE </a> </td>
+
+        <td><a href="{% url 'dele_enq' obj.id %}" > DELETE </a> </td>
 
 
     </tr>
