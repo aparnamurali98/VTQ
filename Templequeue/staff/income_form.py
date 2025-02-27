@@ -10,7 +10,7 @@ class incomes_form(forms.ModelForm):
 
     class Meta:
         model=incomes_models
-        fields=('income_typeid','income_date','Amount','Narration','Temple_name')
+        fields=('income_typeid','income_date','Amount','Narration')
         widgets = {
             'income_date': forms.DateInput(attrs={'type': 'date'}),
         }

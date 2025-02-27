@@ -25,7 +25,15 @@
         <td>{{obj.pooja}}</td>
          <td>{{obj.pooja.amount}}</td>
         <td><input type="text" id="name" value="{{obj.Name}}" name="Dname" required></td>
-         <td><input type="text" id="star" value="{{obj.star}}" name="star" required></td>
+<!--         <td><input type="text" id="star" value="{{obj.star}}" name="star" required></td>-->
+        <td>
+                <select name="star" required>
+                    <option value="">Select Star</option>
+                    {% for value, label in form.star.field.choices %}
+                    <option value="{{ value }}" {% if obj.star == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </td>
         <td><input type="hidden" id="poojaid" name="poojaid" value="{{obj.id}}"></td>
         <td><input type="submit" value="save"></td>
        <td><a href="{% url 'delete_cart' obj.id %}">Delete</a></td>

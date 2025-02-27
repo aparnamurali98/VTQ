@@ -340,38 +340,146 @@ def show_pooja(request,id):
     return render(request, "viewpooja1.html", context)
 
 
+# def Addtocart(request):
+#     context = {}
+#
+#     try:
+#         # Retrieve the devotee ID from the session
+#         did = request.session["devote_id"]
+#
+#         # Get the devotee object based on the ID
+#         devote_object = devotee_model.objects.get(pk=did)
+#
+#         # Fetch pooja book list related to the devotee that are in the cart
+#         poojabook_list = poojabook_model.objects.select_related('pooja').filter(Devotee=devote_object, Status='cart')
+#
+#         # Add the pooja book list to the context
+#         context['poojabook_list'] = poojabook_list
+#
+#         # Calculate the subtotal of the pooja amounts
+#         subtotal = poojabook_list.aggregate(subtotal=Sum('pooja__amount'))['subtotal'] or 0
+#
+#         # Add the subtotal to the context
+#         context['subtotal'] = subtotal
+#         context["today"] = date.today().isoformat()  # Pass today's date in YYYY-MM-DD format
+#
+#     except Exception as e:
+#         # Handle exceptions and provide an error message in the context
+#         context['error'] = f"An error occurred: {str(e)}"
+#     context["temple_id"] = request.session["temple_id"]
+#
+#
+#         # Render the viewcart.html template with the context data
+#     return render(request, "viewcart.html", context)
+# def Addtocart(request):
+#     context = {}
+#
+#     try:
+#         # Retrieve the devotee ID from the session
+#         did = request.session["devote_id"]
+#
+#         # Get the devotee object based on the ID
+#         devote_object = devotee_model.objects.get(pk=did)
+#
+#         # Fetch pooja book list related to the devotee that are in the cart
+#         poojabook_list = poojabook_model.objects.select_related('pooja').filter(Devotee=devote_object, Status='cart')
+#
+#         # Add the pooja book list to the context
+#         context['poojabook_list'] = poojabook_list
+#
+#         # Filter bookings where Name and star are not empty
+#         valid_poojas = poojabook_list.filter(Name__isnull=False, Name__gt='', star__isnull=False, star__gt='')
+#
+#         # Calculate the subtotal only for valid poojas
+#         subtotal = valid_poojas.aggregate(subtotal=Sum('pooja__amount'))['subtotal'] or 0
+#
+#         # Add the subtotal to the context only if valid poojas exist
+#         if valid_poojas.exists():
+#             context['subtotal'] = subtotal
+#
+#         context["today"] = date.today().isoformat()  # Pass today's date in YYYY-MM-DD format
+#         context["temple_id"] = request.session["temple_id"]
+#
+#     except Exception as e:
+#         # Handle exceptions and provide an error message in the context
+#         context['error'] = f"An error occurred: {str(e)}"
+#
+#     # Render the viewcart.html template with the context data
+#     return render(request, "viewcart.html", context)
+
+# def Addtocart(request):
+#     context = {}
+#
+#     try:
+#         # Retrieve devotee ID from the session
+#         did = request.session["devote_id"]
+#
+#         # Get devotee object based on the ID
+#         devote_object = devotee_model.objects.get(pk=did)
+#
+#         # Fetch pooja book list related to devotee that are in the cart
+#         poojabook_list = poojabook_model.objects.select_related('pooja').filter(Devotee=devote_object, Status='cart')
+#
+#         # Add the pooja book list to the context
+#         context['poojabook_list'] = poojabook_list
+#         context['form'] = poojabook_form()  # Add the form here
+#
+#         # Filter bookings where Name and star are not empty
+#         valid_poojas = poojabook_list.filter(Name__isnull=False, Name__gt='', star__isnull=False, star__gt='')
+#
+#         # Calculate the subtotal only for valid poojas
+#         subtotal = valid_poojas.aggregate(subtotal=Sum('pooja__amount'))['subtotal'] or 0
+#
+#         # Add the subtotal to the context only if valid poojas exist
+#         if valid_poojas.exists():
+#             context['subtotal'] = subtotal
+#
+#         context["today"] = date.today().isoformat()  # Pass today's date in YYYY-MM-DD format
+#         context["temple_id"] = request.session["temple_id"]
+#
+#     except Exception as e:
+#         # Handle exceptions and provide an error message in the context
+#         context['error'] = f"An error occurred: {str(e)}"
+#
+#     # Render the viewcart.html template with the context data
+#     return render(request, "viewcart.html", context)
+
 def Addtocart(request):
     context = {}
 
     try:
-        # Retrieve the devotee ID from the session
+        # Retrieve devotee ID from the session
         did = request.session["devote_id"]
 
-        # Get the devotee object based on the ID
+        # Get devotee object based on the ID
         devote_object = devotee_model.objects.get(pk=did)
 
-        # Fetch pooja book list related to the devotee that are in the cart
+        # Fetch pooja book list related to devotee that are in the cart
         poojabook_list = poojabook_model.objects.select_related('pooja').filter(Devotee=devote_object, Status='cart')
 
         # Add the pooja book list to the context
         context['poojabook_list'] = poojabook_list
+        context['form'] = poojabook_form()  # Add the form here
 
-        # Calculate the subtotal of the pooja amounts
-        subtotal = poojabook_list.aggregate(subtotal=Sum('pooja__amount'))['subtotal'] or 0
+        # Filter bookings where Name and star are not empty
+        valid_poojas = poojabook_list.filter(Name__isnull=False, Name__gt='', star__isnull=False, star__gt='')
 
-        # Add the subtotal to the context
-        context['subtotal'] = subtotal
+        # Calculate the subtotal only for valid poojas
+        subtotal = valid_poojas.aggregate(subtotal=Sum('pooja__amount'))['subtotal'] or 0
+
+        # Add the subtotal to the context only if valid poojas exist
+        if valid_poojas.exists():
+            context['subtotal'] = subtotal
+
         context["today"] = date.today().isoformat()  # Pass today's date in YYYY-MM-DD format
+        context["temple_id"] = request.session["temple_id"]
 
     except Exception as e:
         # Handle exceptions and provide an error message in the context
         context['error'] = f"An error occurred: {str(e)}"
-    context["temple_id"] = request.session["temple_id"]
 
-
-        # Render the viewcart.html template with the context data
+    # Render the viewcart.html template with the context data
     return render(request, "viewcart.html", context)
-
 
 def add_addtocart(request):
     context = {}

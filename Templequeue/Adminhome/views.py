@@ -274,6 +274,7 @@ def insert_staff(request):
     context={}
     frm= staf_form(request.POST or None,request.FILES or None)
     if request.POST:
+        print(request.POST)
         try:
             staffname = request.POST.get('sname')
             saddress = request.POST.get('address')
@@ -284,6 +285,8 @@ def insert_staff(request):
             dob = request.POST.get('dob')
             sage = request.POST.get('age')
             gender = request.POST.get('gender')
+            temp_id = request.POST.get('Temple_name')
+            temp_instance = templeinfo_model.objects.get(id=temp_id)
             staffusername = request.POST.get('username')
             staffpassword = request.POST.get('password')
             staffconfirm_password = request.POST.get('confirm_password')
@@ -291,11 +294,12 @@ def insert_staff(request):
                 if frm.is_valid():
                     loginid=User.objects.create_user(username=staffusername,password=staffpassword)
                     role = role_model.objects.create(login=loginid, roletype=3)
-                    staffreg=staff_model.objects.create(sname=staffname,address=saddress,email=semail,mobile=smobile,photo=sphoto,dob=dob,age=sage,gender=gender,login=loginid)
+                    staffreg=staff_model.objects.create(sname=staffname,address=saddress,email=semail,mobile=smobile,photo=sphoto,dob=dob,age=sage,gender=gender,Temple_name=temp_instance,login=loginid)
                     return HttpResponseRedirect('/Adhome')
             else:
                 messages.error(request,"password does not match")
         except Exception as ex:
+            print(ex)
             error_message="User Name Alredy Exists"
 
             messages.error(request,error_message)

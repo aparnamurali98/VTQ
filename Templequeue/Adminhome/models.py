@@ -18,18 +18,7 @@ class location_model(models.Model):
     def __str__(self):
          return self.locname
 
-class staff_model(models.Model):
-    sname=models.CharField(max_length=30)
-    address = models.TextField(max_length=100)
-    email=models.EmailField('Email Id',blank=True)
-    mobile = models.BigIntegerField()
-    photo = models.FileField(upload_to="photos", blank=True)
-    dob = models.DateField(max_length=8)
-    age=models.IntegerField()
-    gender=models.CharField(max_length=7)
-    login =models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    class Meta:
-        db_table="staff"
+
 
 class priest_model(models.Model):
     Pname=models.CharField(max_length=30)
@@ -84,7 +73,19 @@ class templeinfo_model(models.Model):
     def __str__(self):
         return self.tname
 
-
+class staff_model(models.Model):
+    sname=models.CharField(max_length=30)
+    address = models.TextField(max_length=100)
+    email=models.EmailField('Email Id',blank=True)
+    mobile = models.BigIntegerField()
+    photo = models.FileField(upload_to="photos", blank=True)
+    dob = models.DateField(max_length=8)
+    age=models.IntegerField()
+    gender=models.CharField(max_length=7)
+    login =models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    Temple_name = models.ForeignKey(templeinfo_model, on_delete=models.CASCADE, null=True)
+    class Meta:
+        db_table="staff"
 
 
 

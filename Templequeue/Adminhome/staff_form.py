@@ -31,5 +31,5 @@ class staf_form(forms.ModelForm):
     confirm_password = forms.CharField(max_length=10, widget=forms.PasswordInput)
     class Meta:
         model=staff_model
-        fields=('sname','address','email','mobile','photo','dob','age','gender')
+        fields=('sname','address','email','mobile','photo','dob','age','gender','Temple_name')
 

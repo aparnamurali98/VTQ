@@ -1,19 +1,12 @@
 import datetime
 import django.utils.timezone
-
 from django.contrib import messages
 from django.db.models import Sum
 from django.shortcuts import render, get_object_or_404, redirect
-
-# Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect
-
 from Adminhome.models import staff_model
-
 from staff.staff_form import staff_form
-
 from Registration.models import devotee_model
-
 from Adminhome.models import income_model
 from Devotee.models import bookingpooja_model,poojabook_model
 from .income_form import incomes_form
@@ -23,6 +16,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 
 
+# Create your views here.
 
 
 
@@ -98,7 +92,7 @@ def incomes(request):
                 Amount = request.POST.get('Amount')
                 income_typeid = frm.cleaned_data['income_typeid']
                 Narration = request.POST.get('Narration')
-                Temple_name= frm.cleaned_data['Temple_name']
+
 
 
                 # Create a new income record
@@ -108,7 +102,7 @@ def incomes(request):
                     Amount=Amount,
                     Narration=Narration,
                     staff=staff,
-                    Temple_name=Temple_name
+
                 )
 
 
@@ -129,11 +123,12 @@ def incomes(request):
 
 def view_income(request):
     context = {}
-
+    staff_id=request.session["staff_id"]
     staff_income = (
         incomes_models.objects
-        .select_related('Temple_name', 'income_typeid')
-        .values('income_typeid__inctype', 'Temple_name__tname')
+        .select_related('staff', 'income_typeid')
+        .filter(staff__id=staff_id)
+        .values('income_typeid__inctype', 'staff__Temple_name__tname')
         .annotate(total_amount=Sum('Amount'))
     )
     context['staff_income'] = staff_income
