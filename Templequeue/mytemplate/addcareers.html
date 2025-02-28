@@ -34,7 +34,9 @@
         <th>Jobtitle </th>
         <th> Notification</th>
           <th > Adddate</th>
+          <th> status</th>
         <th colspan="7">Notification_file</th>
+
 
 
 
@@ -47,6 +49,7 @@
         <td>{{obj.Jobtitle}}</td>
         <td>{{obj.Notification }}</td>
         <td>{{obj.Adddate }}</td>
+        <td>{{obj.Status}}</td>
         {% if obj.Notification_file %}
         <td><img src="{{obj.Notification_file.url}}" style="width:100px;height:auto;"></td>
         {% endif %}

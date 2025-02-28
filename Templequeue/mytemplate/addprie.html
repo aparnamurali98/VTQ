@@ -34,10 +34,9 @@
          <th>Priest Name</th>
         <th>Age</th>
         <th>Address</th>
-        <th>Location</th>
+        <th>District</th>
         <th>Jobtype</th>
         <th>Phone</th>
-        <th>Email</th>
         <th colspan="1">Experience</th>
 
     </tr>
@@ -48,10 +47,9 @@
         <td>{{obj.Pname}}</td>
         <td>{{obj.Age}}</td>
         <td>{{obj.Address}}</td>
-        <td>{{obj.loc}}</td>
+        <td>{{obj.dist}}</td>
         <td>{{obj.Jobtype}}</td>
         <td>{{obj.Phone}}</td>
-        <td>{{obj.Email}}</td>
         <td>{{obj.Experience}}</td>
         <td><a href="{% url 'up_priest' obj.id %}"> UPDATE </a> </td>
         <td><a href="{% url 'dele_priest' obj.id %}"> DELETE </a> </td>

@@ -33,6 +33,7 @@
         <th>Address</th>
         <th>Description</th>
         <th>Contact Name</th>
+        <th>Contact Number</th>
          <th>Image</th>
         <th>Pooja</th>
         <th colspan="9">Location</th>
@@ -45,6 +46,7 @@
         <td>{{obj.address}}</td>
         <td>{{obj.discription}}</td>
         <td>{{obj.cotname}}</td>
+        <td> {{obj.contnum}}</td>
          {% if obj.Photo %}
         <td><img src="{{ obj.Photo.url }}" alt="{{ obj.tname }}" style="width:100px;height:auto;"></td>
         {% endif %}

@@ -120,8 +120,7 @@ def login(request):
                             # Set session variables for the devotee
                             request.session["devote_id"] = obj.id
                             request.session["devote_name"] = obj.dname
-                            print(obj.id)
-                            print(obj.dname)
+
                             return HttpResponseRedirect('/Devotee')
 
                     # If the role type is '3', treat the user as a staff member
@@ -131,8 +130,8 @@ def login(request):
                             # Set session variables for the staff member
                             request.session["staff_id"] = obj.id
                             request.session["staff_name"] = obj.sname
-                            print(obj.id)
-                            print(obj.sname)
+                            request.session["Temp_name"] =obj.Temple_name.id
+
                             return HttpResponseRedirect('/staff_home')
 
                         # If no valid role is found, return an invalid credential response

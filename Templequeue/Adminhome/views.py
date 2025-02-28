@@ -540,13 +540,14 @@ def insert_pooja(request):
 
         # Retrieve the pooja type ID from the POST data
         pooja = request.POST.get('poojatypeid')
+        poojaname=request.POST.get('pname')
 
 
 
         # Check if a pooja with the same type ID already exists
-        if pooja_model.objects.filter(poojatypeid=pooja).exists():
+        if pooja_model.objects.filter(poojatypeid=pooja,pname='poojaname').exists():
             # If it exists, show an info message to the user
-            messages.info(request, 'Pooja Type Id Already Exists')
+            messages.info(request, 'Pooja Already Exists')
             # Redirect the user back to the pooja insertion page
             return redirect('/Adhome/insert_pooja')
 

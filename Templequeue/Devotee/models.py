@@ -3,7 +3,7 @@ from django.db import models
 from Adminhome.models import careers_model
 from Registration.models import devotee_model
 from Adminhome.models import pooja_model
-from Adminhome.models import staff_model
+from Adminhome.models import staff_model,templeinfo_model
 
 
 # Create your models here.
@@ -27,6 +27,7 @@ class bookingpooja_model(models.Model):
     Total_amount= models.IntegerField(null=True)
     Status=models.CharField(max_length=30,default='New')
     staff = models.ForeignKey(staff_model, on_delete=models.CASCADE,null=True)
+    Temple_name = models.ForeignKey(templeinfo_model, on_delete=models.CASCADE, null=True)
 
     class Meta:
         db_table='Bokking_Pooja'

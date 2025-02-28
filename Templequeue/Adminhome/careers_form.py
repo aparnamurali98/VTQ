@@ -3,7 +3,7 @@ from django import forms
 from .models import careers_model
 
 
-Status=[('A','Active'),('I','Inactive')]
+Status=[('Active','Active'),('Inactive','Inactive')]
 class careers_form(forms.ModelForm):
     Status = forms.CharField(label='Status', widget=forms.RadioSelect(choices=Status))
     Adddate = forms.DateField(
@@ -12,4 +12,4 @@ class careers_form(forms.ModelForm):
     )
     class Meta:
         model=careers_model
-        fields=('Refno','Jobtitle','Notification','Notification_file','Adddate')
+        fields=('Refno','Jobtitle','Notification','Notification_file','Adddate','Status')

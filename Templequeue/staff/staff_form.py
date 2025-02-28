@@ -17,4 +17,4 @@ class staff_form(forms.ModelForm):
 
     class Meta:
         model=staff_model
-        fields=('sname','address','email','mobile','photo','dob','age','gender')
+        fields=('sname','address','email','mobile','photo','dob','age','gender','Temple_name')

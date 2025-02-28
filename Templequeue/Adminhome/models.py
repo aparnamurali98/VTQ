@@ -24,10 +24,9 @@ class priest_model(models.Model):
     Pname=models.CharField(max_length=30)
     Age = models.IntegerField()
     Address = models.TextField(max_length=100)
-    loc = models.ForeignKey(location_model, on_delete=models.CASCADE)
+    dist= models.ForeignKey(distric_model, on_delete=models.CASCADE,null=True)
     Jobtype=models.CharField(max_length=30)
     Phone = models.BigIntegerField()
-    Email = models.EmailField('Email Id', blank=True)
     Experience=models.IntegerField()
     class Meta:
         db_table="hindu_priest"
@@ -47,7 +46,7 @@ class poojatype_model(models.Model):
 class pooja_model(models.Model):
     poojatypeid = models.ForeignKey(poojatype_model, on_delete=models.CASCADE, null=True)
     pname=models.CharField(max_length=30)
-    desc= models.TextField(max_length=100)
+    desc= models.TextField(max_length=1000)
     priestid =models.ForeignKey(priest_model, on_delete=models.CASCADE)
     Photo = models.FileField(upload_to="photos", blank=True)
     amount = models.IntegerField()
@@ -62,8 +61,9 @@ class pooja_model(models.Model):
 class templeinfo_model(models.Model):
     tname=models.CharField(max_length=50)
     address = models.TextField(max_length=100)
-    discription = models.TextField(max_length=200)
+    discription = models.TextField(max_length=1000)
     cotname=models.CharField(max_length=30)
+    contnum=models.BigIntegerField(null=True)
     Photo=models.FileField(upload_to="photos", blank=True)
     loc=models.ForeignKey(location_model,on_delete=models.CASCADE)
     Pooja=models.ManyToManyField(pooja_model)

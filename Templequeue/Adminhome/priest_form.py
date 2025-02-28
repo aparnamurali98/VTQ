@@ -8,4 +8,4 @@ class prie_form(forms.ModelForm):
 
     class Meta:
         model=priest_model
-        fields=('Pname','Age','Address','loc','Jobtype','Phone','Email','Experience')
+        fields=('Pname','Age','Address','dist','Jobtype','Phone','Experience')

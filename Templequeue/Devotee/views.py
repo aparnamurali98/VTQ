@@ -161,7 +161,8 @@ def show_careers(request):
 
     try:
         # Retrieve all career records from the database
-        context['careers_list'] = careers_model.objects.all()
+        context['careers_list'] = careers_model.objects.filter(Status='Active')
+
 
     except Exception as ex:
         # Handle any unexpected exceptions
@@ -237,7 +238,7 @@ def search_temple1(request):
             for item in data
         ]
 
-        print(data_list)  # Print the list of temple data for debugging purposes
+
 
         # Return the data as a JSON response
         return JsonResponse({'data': data_list})
@@ -330,9 +331,9 @@ def show_pooja(request,id):
     temple = templeinfo_model.objects.prefetch_related('Pooja').get(id=id)
     context["pooja_list"] = temple.Pooja.all()
     p=temple.Pooja.all()
-    print(p,'p')
+
     request.session["temple_id"] =temple.id
-    print(temple.id,'temple')
+
 
 
 
@@ -491,13 +492,12 @@ def add_addtocart(request):
         # Get pooja ID from the POST request and retrieve the cart item for the devotee
         pooja = request.POST.get('poojaid')
         obj = get_object_or_404(poojabook_model, id=pooja, Devotee=devote_object, Status='cart')
-        print(obj)  # Debug print to show the retrieved object
 
         if request.POST:
             # Retrieve name and star details from POST data
-            print('name1')  # Debug print to indicate processing
+
             Dname = request.POST.get('Dname')
-            print(Dname)  # Debug print to show retrieved name
+
             star = request.POST.get('star')
 
             # Update cart item with new name and star values
@@ -539,13 +539,13 @@ def Confirm_order(request):
         # Retrieve devotee ID from the session
         did = request.session["devote_id"]
         devote_object = devotee_model.objects.get(id=did)
-        print(did)  # Debug: print the devotee ID
+
 
         if request.POST:  # Check if the form is submitted
             # Get booking date and total amount from the POST request
             Bookingdate = request.POST.get('bdate')
             total_amount = request.POST.get('amount')
-            print(total_amount)  # Debug: print the total amount
+
 
             # Retrieve the booking record for the devotee with 'New' status
             bk = bookingpooja_model.objects.get(Devotee=devote_object, Status='New')
@@ -555,6 +555,8 @@ def Confirm_order(request):
             pooja_book.Want_date = Bookingdate
             pooja_book.Total_amount = total_amount
             pooja_book.Status = 'confirmed'
+            temple_instance=templeinfo_model.objects.get(id=request.session["temple_id"])
+            pooja_book.Temple_name=temple_instance
             pooja_book.save()
 
             # Update all 'cart' status items for the devotee to 'confirm'
@@ -648,10 +650,11 @@ def payment(request, pid,subtotal):
         total_amount = subtotal
         income_date=django.utils.timezone.now()
         Narration='pooja booking'
+        temple_instance = templeinfo_model.objects.get(id=request.session["temple_id"])
         typeid = income_model.objects.get(pk=10)
         pooja_booking = bookingpooja_model.objects.get(pk=pid)
         payment = payment_model.objects.create(poojabook=pooja_booking, card_type=card_type, card_holder_name=card_holder_name, Card_number=card_number, card_exp_date=card_exp_date, cvv_number=cvv_number, Total_amount=total_amount)
-        incomes = incomes_models.objects.create(Devotee=devote_object,Bookingpooja=pooja_booking, income_typeid=typeid, income_date=income_date,Amount=total_amount, Narration=Narration)
+        incomes = incomes_models.objects.create(Devotee=devote_object,Bookingpooja=pooja_booking, income_typeid=typeid, income_date=income_date,Amount=total_amount, Narration=Narration,Temp_name=temple_instance)
         url = reverse('receipt', kwargs={'pid':pid })
         return redirect(url)
 

@@ -19,6 +19,7 @@ class incomes_models(models.Model):
     Devotee = models.ForeignKey( devotee_model, on_delete=models.CASCADE,null=True)
     income_date = models.DateTimeField(max_length=10,default=django.utils.timezone.now)
     Bookingpooja =models.ForeignKey( bookingpooja_model, on_delete=models.CASCADE,null=True)
+    Temp_name = models.ForeignKey(templeinfo_model, on_delete=models.CASCADE, null=True)
     Amount=models.IntegerField()
     Narration=models.TextField(max_length=30,null=True)
     staff = models.ForeignKey(staff_model, on_delete=models.CASCADE,null=True)
