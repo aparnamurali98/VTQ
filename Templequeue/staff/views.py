@@ -6,11 +6,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from Adminhome.models import staff_model,templeinfo_model
 from .staff_form import staff_form
+from.expense_form import expense_form
 from Registration.models import devotee_model
-from Adminhome.models import income_model
+from Adminhome.models import income_model,expense_model
 from Devotee.models import bookingpooja_model,poojabook_model
 from .income_form import incomes_form
 from .models import incomes_models
+from .models import Expense_models
 from django.core.mail import EmailMessage, get_connection
 from django.conf import settings
 from django.core.mail import send_mail
@@ -192,3 +194,60 @@ def view_income(request):
 
     context['staff_income'] = staff_income
     return render(request, "viewincometotal.html", context)
+
+
+def expense(request):
+    context = {}
+    try:
+        # Retrieve staff_id from the session
+        staff_id = request.session["staff_id"]
+        # Fetch the staff object with the given id or raise a 404 if not found
+        staff = staff_model.objects.get( id=staff_id)
+        s=staff.Temple_name.id
+        # Initialize the form
+        frm = expense_form(request.POST or None)
+        # Check if the request method is POST
+        if request.POST:
+               # Retrieve form data
+            expense_date = request.POST.get('Expense_date')
+            amount = request.POST.get('Amount')
+            Expense_typeid = request.POST.get('Expense_typeid')
+            expensetype_instance=expense_model.objects.get(id=Expense_typeid)
+            Narration = request.POST.get('Narration')
+            temple_instance=templeinfo_model.objects.get(id=s)
+            # Create a new income record
+            Expense_models.objects.create(
+                Expense_typeid=expensetype_instance,
+                Expense_date=expense_date,
+                Amount=amount,
+                Narration=Narration,
+                staff=staff,
+                Temple_name=temple_instance,
+            )
+            # Redirect to the incomes page after successful form submission
+            return HttpResponseRedirect('/staff_home/expense')
+        # Add the form to context for rendering in the template
+    except Exception as e:
+        # Handle any exception that occurs and display an error message
+        messages.error(request, f"An error occurred: {str(e)}")
+        return HttpResponseRedirect('/staff_home/expense')  # Redirect to the incomes page
+    context['f'] = frm
+    # Render the template with the form in context
+    return render(request, "expensestaff.html", context)
+
+def view_expense(request):
+    context = {}
+    staff_id=request.session["staff_id"]
+    staff_expense= (
+        Expense_models.objects
+        .select_related('staff', 'Expense_typeid')
+        .filter(staff__id=staff_id)
+        .values('Expense_typeid__Exptype', 'staff__Temple_name__tname')
+        .annotate(total_amount=Sum('Amount'))
+    )
+
+    context['staff_expense'] = staff_expense
+    return render(request, "viewexpensetotal.html", context)
+
+
+

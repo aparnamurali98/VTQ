@@ -1,7 +1,7 @@
 import django
 from django.db import models
 
-from Adminhome.models import income_model
+from Adminhome.models import income_model,expense_model
 
 from Registration.models import devotee_model
 
@@ -25,3 +25,13 @@ class incomes_models(models.Model):
     staff = models.ForeignKey(staff_model, on_delete=models.CASCADE,null=True)
     class Meta:
         db_table = "Staff_income_model"
+
+class Expense_models(models.Model):
+    Expense_typeid = models.ForeignKey(expense_model, on_delete=models.CASCADE)
+    Expense_date = models.DateTimeField(max_length=10,default=django.utils.timezone.now)
+    Temple_name = models.ForeignKey(templeinfo_model, on_delete=models.CASCADE, null=True)
+    Amount=models.IntegerField()
+    Narration=models.TextField(max_length=30,null=True)
+    staff = models.ForeignKey(staff_model, on_delete=models.CASCADE,null=True)
+    class Meta:
+        db_table = "Staff_Expense_model"

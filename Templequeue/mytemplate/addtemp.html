@@ -36,6 +36,7 @@
         <th>Contact Number</th>
          <th>Image</th>
         <th>Pooja</th>
+
         <th colspan="9">Location</th>
 
     </tr>
@@ -53,6 +54,8 @@
        <td> {% for pub  in obj.Pooja.all %}
             <li>{{ pub.pname }}</li>
         {% endfor %}</td>
+
+
         <td>{{obj.loc}}</td>
 
         <td><a href="{% url 'up_temple' obj.id %}"> UPDATE </a> </td>

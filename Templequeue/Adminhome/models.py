@@ -46,7 +46,7 @@ class poojatype_model(models.Model):
 class pooja_model(models.Model):
     poojatypeid = models.ForeignKey(poojatype_model, on_delete=models.CASCADE, null=True)
     pname=models.CharField(max_length=30)
-    desc= models.TextField(max_length=1000)
+    desc= models.TextField(max_length=100)
     priestid =models.ForeignKey(priest_model, on_delete=models.CASCADE)
     Photo = models.FileField(upload_to="photos", blank=True)
     amount = models.IntegerField()
@@ -115,6 +115,8 @@ class expense_model(models.Model):
     Exptype=models.CharField(max_length=30)
     class Meta:
         db_table="Expense_type"
+    def __str__(self):
+        return self.Exptype
 
 
 class poojaschedule_model(models.Model):

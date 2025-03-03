@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import templeinfo_model
+from .models import templeinfo_model,pooja_model
 
 
 class temple_form(forms.ModelForm):

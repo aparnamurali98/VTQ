@@ -13,19 +13,17 @@
 
     <tr>
 
-         <th>Temple Income Type</th>
+         <th>Temple Expense Type</th>
         <th>Total Amount</th>
     </tr>
-       {% for obj in staff_income %}
+       {% for obj in staff_expense %}
      <tr>
-
-        <td>{{obj.income_typeid__inctype}}</td>
+        <td>{{obj.Expense_typeid__Exptype}}</td>
          <td>{{obj.total_amount}}</td>
      </tr>
             {% endfor %}
 
  </table>
 {% endblock content %}
-
 </body>
 </html>
