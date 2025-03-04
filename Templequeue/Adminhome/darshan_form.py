@@ -6,4 +6,4 @@ from .models import darshan_model
 class darsh_form(forms.ModelForm):
     class Meta:
         model=darshan_model
-        fields=('id','Temple_name','Day','Timings')
+        fields=('id','Day','Timings')

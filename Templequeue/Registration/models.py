@@ -10,7 +10,6 @@ class devotee_model(models.Model):
     address = models.TextField(max_length=100)
     age = models.IntegerField()
     gender = models.CharField(max_length=7)
-    star=models.CharField(max_length=30)
     email = models.EmailField('Email Id', blank=True)
     mobile = models.BigIntegerField()
     loc = models.ForeignKey(location_model, on_delete=models.CASCADE)

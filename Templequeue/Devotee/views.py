@@ -41,8 +41,9 @@ from Adminhome.models import priest_model
 # Create your views here.
 def home (request):
     context = {}
-    context['careers_list'] = careers_model.objects.all()
+
     context['special_day'] = specialday_model.objects.all()
+    context['careers_list'] = careers_model.objects.filter(Status='Active')
 
     return render(request, "customerhome.html",context)
     # return HttpResponse("<a href='show_staff'>view staff</a>"
@@ -170,8 +171,6 @@ def show_careers(request):
 
     # Render the template with the context data
     return render(request, "viewcareers.html", context)
-
-
 
 
 def show_darshan(request,temple_id):
@@ -333,9 +332,6 @@ def show_pooja(request,id):
     p=temple.Pooja.all()
 
     request.session["temple_id"] =temple.id
-
-
-
 
     # Render the template with the context data
     return render(request, "viewpooja1.html", context)

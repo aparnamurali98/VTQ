@@ -1442,6 +1442,38 @@ def delete_careers(request, cid):
         return HttpResponseRedirect("/Adhome/insert_careers")
 
 
+# def insert_darshan(request):
+#     context = {}
+#
+#     try:
+#         # Initialize the form with POST data if available
+#         frm = darsh_form(request.POST or None)
+#
+#         # Retrieve the darshan time from the POST request
+#         day = request.POST.get('Day')
+#         temple=request.POST.get('Temple_name')
+#
+#
+#         # Check if a darshan record with the same time already exists
+#         if darshan_model.objects.filter(Day=day , Temple_name=temple).exists():
+#             messages.info(request, 'This darshan time already exists')
+#             return redirect('/Adhome/insert_darshan')
+#         else:
+#             # If the form is valid, save the new darshan record
+#             if frm.is_valid():
+#                 frm.save()
+#                 return redirect('/Adhome/insert_darshan')
+#
+#     except Exception as ex:
+#         # Handle any unexpected exceptions
+#         messages.error(request, f"An error occurred while inserting the darshan record: {str(ex)}")
+#
+#     # Pass the form and the list of existing darshan records to the context
+#     context['f'] = frm
+#     context['darshan_list'] = darshan_model.objects.all()
+#
+#     # Render the template with the context data
+#     return render(request, "adddarshan.html", context)
 def insert_darshan(request):
     context = {}
 
@@ -1451,17 +1483,20 @@ def insert_darshan(request):
 
         # Retrieve the darshan time from the POST request
         day = request.POST.get('Day')
-        temple=request.POST.get('Temple_name')
+        Temple_name =request.session["Temp_name"]
+        temple_instance = templeinfo_model.objects.get(id=Temple_name)
 
 
         # Check if a darshan record with the same time already exists
-        if darshan_model.objects.filter(Day=day , Temple_name=temple).exists():
+        if darshan_model.objects.filter(Day=day , Temple_name=temple_instance).exists():
             messages.info(request, 'This darshan time already exists')
             return redirect('/Adhome/insert_darshan')
         else:
             # If the form is valid, save the new darshan record
             if frm.is_valid():
-                frm.save()
+                obj=frm.save()
+                obj.Temple_name=temple_instance
+                obj.save()
                 return redirect('/Adhome/insert_darshan')
 
     except Exception as ex:
@@ -1470,7 +1505,7 @@ def insert_darshan(request):
 
     # Pass the form and the list of existing darshan records to the context
     context['f'] = frm
-    context['darshan_list'] = darshan_model.objects.all()
+    context['darshan_list'] = darshan_model.objects.filter(Temple_name=Temple_name)
 
     # Render the template with the context data
     return render(request, "adddarshan.html", context)

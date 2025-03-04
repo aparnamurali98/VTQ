@@ -15,4 +15,4 @@ class devo_form(forms.ModelForm):
     confirm_password = forms.CharField(max_length=10, widget=forms.PasswordInput)
     class Meta:
         model=devotee_model
-        fields=('dname','address','age','gender','star','email','mobile','loc')
+        fields=('dname','address','age','gender','email','mobile','loc')

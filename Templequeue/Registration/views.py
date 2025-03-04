@@ -30,7 +30,6 @@ def insert_devotee(request):
             if devuconfirm_password==devupassword:
 
                 devloc = request.POST.get('loc')
-                print(devloc,'location')
                 locid = location_model.objects.get(id=devloc)
                 loginid=User.objects.create_user(username=devusername,password=devupassword)
                 role=role_model.objects.create(login=loginid,roletype=2)
