@@ -78,13 +78,15 @@
                             <div class="navbar-nav mr-auto py-0">
                                 <a href="{% url 'dev_home' %}" class="nav-item nav-link active">Home</a>
                                 <a href="{% url 'searchtemple' %}" class="nav-item nav-link">Pooja Booking</a>
-                                  <a href="{% url 'showcareers' %}" class="nav-item nav-link">Careers</a>
+<!--                                  <a href="{% url 'showcareers' %}" class="nav-item nav-link">Careers</a>-->
+                                <a href="{% url 'temple' %}" class="nav-item nav-link">Temple information</a>
 
                                 <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEW</a>
                                     <div class="dropdown-menu rounded-0 m-0">
 
-                                        <a href="{% url 'temple' %}" class="dropdown-item">show_templeinfo</a>
+                                        <a href="{% url 'priest' %}" class="dropdown-item">show_priest</a>
+                                        <a href="{% url 'showcareers' %}" class="dropdown-item">careers</a>
                                         <a href="{% url 'Special' %}" class="dropdown-item"> view Special</a>
 
                                     </div>
@@ -222,12 +224,12 @@ content-center">
             <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="rounded shadow overflow-hidden">
                     <div class="position-relative">
-                        <img class="img-fluid" src="{% static 'img/about-13.jpg' %}" alt="">
+                        <img class="img-fluid" src="{{ x.Temple_name.Photo.url }}" alt="{{ x.Temple_name }}">
 
                     </div>
                     <div class="text-center p-4 mt-3">
                         <h5 class="fw-bold mb-0">{{ x.Title }}</h5>
-                        <p class="card-text">{{ x.Description}}</p>
+                        <p class="card-text">{{ x.Temple_name}}</p>
                         <p class="text-primary">{{ x.From_date }} - {{ x.To_date }}</p>
                     </div>
                 </div>

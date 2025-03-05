@@ -9,7 +9,7 @@
 <body>
 {% block content %}
 
-<form id="f1" method="post" >
+<form id="f1" method="post"  enctype="multipart/form-data">
     {% csrf_token %}
   <table class="table table-striped">
     {{ pooja_data.as_table }}

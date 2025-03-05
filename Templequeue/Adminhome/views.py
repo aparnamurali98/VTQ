@@ -598,7 +598,7 @@ def update_pooja(request, pid):
         obj = get_object_or_404(pooja_model, id=pid)
 
         # Initialize the form with POST data if available, and bind it to the existing pooja object
-        frm = pooja_form(request.POST or None, instance=obj)
+        frm = pooja_form(request.POST or None,request.FILES or None, instance=obj)
 
         # Check if the form is valid
         if frm.is_valid():
@@ -1184,7 +1184,8 @@ def insert_schedule(request):
         pooja = request.POST.get('poojaid')
         day = request.POST.get('dayid')
         timings = request.POST.get('Timings')
-        Temple_name=request.POST.get('Temple_name')
+        Temple_name= request.session["Temp_name"]
+        temple_instance = templeinfo_model.objects.get(id=Temple_name)
 
         # Check if a schedule with the same details already exists
         if poojaschedule_model.objects.filter(dayid=day, poojaid=pooja, Timings=timings,Temple_name=Temple_name).exists():
@@ -1193,6 +1194,8 @@ def insert_schedule(request):
 
         # If form is valid, save the new schedule
         if frm.is_valid():
+            obj = frm.save()
+            obj.Temple_name = temple_instance
             frm.save()
             return redirect('/Adhome/insert_schedule')
 
@@ -1202,7 +1205,7 @@ def insert_schedule(request):
 
     # Prepare context with the form instance and existing schedules
     context['f'] = frm
-    context['schedule_list'] = poojaschedule_model.objects.all()
+    context['schedule_list'] = poojaschedule_model.objects.filter(Temple_name=Temple_name)
 
     # Render the template with the prepared context
     return render(request, "addschedule.html", context)
@@ -1261,6 +1264,8 @@ def insert_special(request):
 
         # Retrieve the 'Title' field from the POST data
         special = request.POST.get('Title')
+        Temple = request.session["Temp_name"]
+        temple_instance = templeinfo_model.objects.get(id=Temple)
 
         # Check if an entry with the same title already exists
         if specialday_model.objects.filter(Title=special).exists():
@@ -1269,6 +1274,8 @@ def insert_special(request):
 
         # If the form is valid, save the new special day entry
         if frm.is_valid():
+            obj=frm.save()
+            obj.Temple_name= temple_instance
             frm.save()
             return redirect('/Adhome/insert_special')
 
@@ -1278,7 +1285,7 @@ def insert_special(request):
 
     # Prepare context with the form instance and all special day entries
     context['f'] = frm
-    context['special_list'] = specialday_model.objects.all()
+    context['special_list'] = specialday_model.objects.filter(Temple_name=Temple)
 
     # Render the template for adding a special day
     return render(request, "addspecial.html", context)
@@ -1442,38 +1449,7 @@ def delete_careers(request, cid):
         return HttpResponseRedirect("/Adhome/insert_careers")
 
 
-# def insert_darshan(request):
-#     context = {}
-#
-#     try:
-#         # Initialize the form with POST data if available
-#         frm = darsh_form(request.POST or None)
-#
-#         # Retrieve the darshan time from the POST request
-#         day = request.POST.get('Day')
-#         temple=request.POST.get('Temple_name')
-#
-#
-#         # Check if a darshan record with the same time already exists
-#         if darshan_model.objects.filter(Day=day , Temple_name=temple).exists():
-#             messages.info(request, 'This darshan time already exists')
-#             return redirect('/Adhome/insert_darshan')
-#         else:
-#             # If the form is valid, save the new darshan record
-#             if frm.is_valid():
-#                 frm.save()
-#                 return redirect('/Adhome/insert_darshan')
-#
-#     except Exception as ex:
-#         # Handle any unexpected exceptions
-#         messages.error(request, f"An error occurred while inserting the darshan record: {str(ex)}")
-#
-#     # Pass the form and the list of existing darshan records to the context
-#     context['f'] = frm
-#     context['darshan_list'] = darshan_model.objects.all()
-#
-#     # Render the template with the context data
-#     return render(request, "adddarshan.html", context)
+
 def insert_darshan(request):
     context = {}
 
@@ -1720,7 +1696,7 @@ def update_poojatype(request, pid):
         obj = get_object_or_404(poojatype_model, id=pid)
 
         # Initialize the form with POST data if available, and bind it to the existing pooja type object
-        frm = poojatype_form(request.POST or None, instance=obj)
+        frm = poojatype_form(request.POST or None,request.FILES,instance=obj)
 
         # Check if the form is valid
         if frm.is_valid():
