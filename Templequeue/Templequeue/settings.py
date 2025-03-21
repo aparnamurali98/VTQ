@@ -85,7 +85,7 @@ DATABASES = {
     'default': {
 
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'templequeue',
+        'NAME': 'virtualtemple',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',  # or the hostname where your MySQL server is running

@@ -11,4 +11,4 @@ class temple_form(forms.ModelForm):
 
     class Meta:
         model=templeinfo_model
-        fields=('tname','address','discription','cotname','contnum','Photo','loc','Pooja')
+        fields=('tname','address','discription','cotname','contnum','Photo','loc','Pooja','Priest')

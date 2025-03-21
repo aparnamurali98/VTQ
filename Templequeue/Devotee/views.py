@@ -36,9 +36,10 @@ from staff.income_form import incomes_form
 from staff.models import incomes_models
 
 from Adminhome.models import priest_model
-
-
-# Create your views here.
+# from django.contrib.auth.decorators import login_required
+#
+# # Create your views here.
+# @login_required(login_url='/login')
 def home (request):
     context = {}
 
@@ -232,7 +233,9 @@ def search_temple1(request):
                 'taddress': item.address,
                 'tdiscription': item.discription,
                 'tcotname': item.cotname,
-                'tPhoto': item.Photo.url
+                'tcontnum':item.contnum,
+                'tPhoto': item.Photo.url,
+                'tPriest':item.Priest.Pname
             }
             for item in data
         ]
@@ -330,6 +333,7 @@ def show_pooja(request,id):
     temple = templeinfo_model.objects.prefetch_related('Pooja').get(id=id)
     context["pooja_list"] = temple.Pooja.all()
     p=temple.Pooja.all()
+    context["Pname"] = temple.Priest.Pname
 
     request.session["temple_id"] =temple.id
 
@@ -577,7 +581,7 @@ def payment(request, pid,subtotal):
         income_date=django.utils.timezone.now()
         Narration='pooja booking'
         temple_instance = templeinfo_model.objects.get(id=request.session["temple_id"])
-        typeid = income_model.objects.get(pk=10)
+        typeid = income_model.objects.get(pk=1)
         pooja_booking = bookingpooja_model.objects.get(pk=pid)
         payment = payment_model.objects.create(poojabook=pooja_booking, card_type=card_type, card_holder_name=card_holder_name, Card_number=card_number, card_exp_date=card_exp_date, cvv_number=cvv_number, Total_amount=total_amount)
         incomes = incomes_models.objects.create(Devotee=devote_object,Bookingpooja=pooja_booking, income_typeid=typeid, income_date=income_date,Amount=total_amount, Narration=Narration,Temp_name=temple_instance)

@@ -8,4 +8,4 @@ class pooja_form(forms.ModelForm):
 
     class Meta:
         model=pooja_model
-        fields=('poojatypeid','pname','desc','priestid','amount','Photo')
+        fields=('poojatypeid','pname','desc','amount','Photo')

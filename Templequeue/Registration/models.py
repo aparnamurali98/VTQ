@@ -12,7 +12,7 @@ class devotee_model(models.Model):
     gender = models.CharField(max_length=7)
     email = models.EmailField('Email Id', blank=True)
     mobile = models.BigIntegerField()
-    loc = models.ForeignKey(location_model, on_delete=models.CASCADE)
+    District = models.ForeignKey(distric_model, on_delete=models.CASCADE,null=True)
     login=models.OneToOneField(User,null=True,on_delete=models.CASCADE)
 
     def __str__(self):

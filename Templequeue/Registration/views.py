@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from .enquiry_form import enquiry_form
 from .models import devotee_model, role_model, enquiry_model
-from Adminhome.models import location_model
+from Adminhome.models import distric_model
 
 from Adminhome.models import staff_model
 
@@ -21,7 +21,6 @@ def insert_devotee(request):
             addre=request.POST.get('address')
             devage=request.POST.get('age')
             devgender=request.POST.get('gender')
-            devstar = request.POST.get('star')
             devemail = request.POST.get('email')
             devmobile = request.POST.get('mobile')
             devusername  = request.POST.get('username')
@@ -29,20 +28,21 @@ def insert_devotee(request):
             devuconfirm_password = request.POST.get('confirm_password')
             if devuconfirm_password==devupassword:
 
-                devloc = request.POST.get('loc')
-                locid = location_model.objects.get(id=devloc)
+                devdist = request.POST.get('District')
+                distid = distric_model.objects.get(id=devdist)
                 loginid=User.objects.create_user(username=devusername,password=devupassword)
                 role=role_model.objects.create(login=loginid,roletype=2)
-                devoteereg=devotee_model.objects.create(dname=devname,address=addre,age=devage,gender=devgender,star=devstar,email=devemail,mobile=devmobile,loc=locid,login=loginid)
+                devoteereg=devotee_model.objects.create(dname=devname,address=addre,age=devage,gender=devgender,email=devemail,mobile=devmobile,District=distid,login=loginid)
                 return HttpResponseRedirect('/login')
             else:
                 messages.error(request,"password does not match")
         except Exception as ex:
-            error_message="User Name Alredy Exists"
-            # error_message = ex
+            # error_message="User Name Alredy Exists"
+            error_message = ex
 
             messages.error(request,error_message)
-    context['loc'] =location_model.objects.all()
+
+    context['District'] = distric_model.objects.all()
     return render(request,"adddevo.html",context)
 
 def insert_enquiry(request):

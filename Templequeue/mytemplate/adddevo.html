@@ -80,13 +80,14 @@
                                             <label for="mobile">Phone Number</label>
                                         </div>
                                     </div>
-                                       <div class="col-md-6">
-                                        <div class="form-floating">
-                                       <select class="form-control" id="loc"  name="loc" required>
 
-                                            <option >choose location</option>
-                                                 {% for obj in loc %}
-                                                <option value="{{ obj.id }}"> {{ obj.locname }}</option>
+                                     <div class="col-md-6">
+                                        <div class="form-floating">
+                                       <select class="form-control" id="District"  name="District" required>
+
+                                            <option >choose District</option>
+                                                 {% for obj in District %}
+                                                <option value="{{ obj.id }}"> {{ obj.distname }}</option>
                                                 {% endfor %}
                                             </select>
 

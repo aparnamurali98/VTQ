@@ -30,12 +30,14 @@
     <tr>
 
         <th>temple Name</th>
+          <th>Image</th>
         <th>Address</th>
         <th>Description</th>
         <th>Contact Name</th>
         <th>Contact Number</th>
-         <th>Image</th>
+        <th>Priest Name</th>
         <th>Pooja</th>
+        <th>District</th>
 
         <th colspan="9">Location</th>
 
@@ -44,19 +46,19 @@
     <tr>
 
         <td>{{obj.tname}}</td>
+         {% if obj.Photo %}
+        <td><img src="{{ obj.Photo.url }}" alt="{{ obj.tname }}" style="width:100px;height:auto;"></td>
+        {% endif %}
         <td>{{obj.address}}</td>
         <td>{{obj.discription}}</td>
         <td>{{obj.cotname}}</td>
         <td> {{obj.contnum}}</td>
-         {% if obj.Photo %}
-        <td><img src="{{ obj.Photo.url }}" alt="{{ obj.tname }}" style="width:100px;height:auto;"></td>
-        {% endif %}
+        <td>{{obj.Priest}}</td>
        <td> {% for pub  in obj.Pooja.all %}
             <li>{{ pub.pname }}</li>
         {% endfor %}</td>
-
-
         <td>{{obj.loc}}</td>
+
 
         <td><a href="{% url 'up_temple' obj.id %}"> UPDATE </a> </td>
         <td><a href="{% url 'dele_temple' obj.id %}"> DELETE </a> </td>

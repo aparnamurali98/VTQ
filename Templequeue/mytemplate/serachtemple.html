@@ -29,9 +29,9 @@ document.getElementById("id_loc").addEventListener("change", function() {
       // Build HTML table using received data
 
       var html = '<table class="table table-stripped">';
-      html += '<tr><td> Temple Name  </td><td>Address </td> <td>discription </td> <td>contact name </td> <td>Photo </td></tr>'
+      html += '<tr><td> Temple Name  </td><td>Address </td> <td>discription </td> <td>contact name </td> <td>Contact Number </td><td>Priest name </td> <td>Photo </td></tr>'
       data.data.forEach(obj => {
-     html += '<tr><td> ' + obj.tname + '</td><td>' + obj.taddress+ '</td> <td>' + obj.tdiscription+ '</td> <td>' + obj.tcotname+ '</td>  <td> <a href="/Devotee/show_pooja/' + obj.id + '/"> <img src="' + obj.tPhoto + '" alt="Temple Photo" width ="150" height="200"> </a></td></tr>'
+     html += '<tr><td> ' + obj.tname + '</td><td>' + obj.taddress+ '</td> <td>' + obj.tdiscription+ '</td> <td>' + obj.tcotname+ '</td> <td>' + obj.tcontnum+ '</td>  <td>' + obj.tPriest+ '</td>   <td> <a href="/Devotee/show_pooja/' + obj.id + '/"> <img src="' + obj.tPhoto + '" alt="Temple Photo" width ="150" height="200"> </a></td></tr>'
 
       });
       html += '</table>';

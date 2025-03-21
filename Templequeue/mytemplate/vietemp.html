@@ -12,22 +12,25 @@
 
  <table class="table table-striped">
     <tr>
-
+        <th>Image</th>
         <th>Temple Name</th>
         <th>Address</th>
         <th>Description</th>
         <th>Contact Name</th>
-        <th>Image</th>
+        <th>Contct Number</th>
+        <th>Priest</th>
         <th>Location</th>
+        <th>District</th>
     </tr>
     {% for obj in info_list %}
     <tr>
-
+        <td><img src="{{ obj.Photo.url }}" alt="{{ obj.tname }}" style="width:100px;height:auto;"></td>
         <td>{{obj.tname}}</td>
         <td>{{obj.address}}</td>
         <td>{{obj.discription}}</td>
         <td>{{obj.cotname}}</td>
-        <td><img src="{{ obj.Photo.url }}" alt="{{ obj.tname }}" style="width:100px;height:auto;"></td>
+        <td>{{obj.contnum}} </td>
+        <td>{{obj.Priest}} </td>
         <td>{{obj.loc}}</td>
         <td>
             <!-- Button to view schedule -->

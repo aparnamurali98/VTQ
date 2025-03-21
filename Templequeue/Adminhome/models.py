@@ -47,7 +47,6 @@ class pooja_model(models.Model):
     poojatypeid = models.ForeignKey(poojatype_model, on_delete=models.CASCADE, null=True)
     pname=models.CharField(max_length=30)
     desc= models.TextField(max_length=100)
-    priestid =models.ForeignKey(priest_model, on_delete=models.CASCADE)
     Photo = models.FileField(upload_to="photos", blank=True)
     amount = models.IntegerField()
     active=models.CharField(max_length=30)
@@ -65,6 +64,7 @@ class templeinfo_model(models.Model):
     cotname=models.CharField(max_length=30)
     contnum=models.BigIntegerField(null=True)
     Photo=models.FileField(upload_to="photos", blank=True)
+    Priest = models.ForeignKey(priest_model, on_delete=models.CASCADE,null=True)
     loc=models.ForeignKey(location_model,on_delete=models.CASCADE)
     Pooja=models.ManyToManyField(pooja_model)
     class Meta:
@@ -141,7 +141,7 @@ class specialday_model(models.Model):
 class careers_model(models.Model):
     Refno = models.IntegerField()
     Jobtitle = models.CharField(max_length=30)
-    Notification = models.CharField(max_length=30)
+    Notification = models.CharField(max_length=50)
     Notification_file = models.FileField(upload_to="photos", blank=True)
     Adddate=models.DateField(max_length=10)
     Status = models.CharField(max_length=50)
