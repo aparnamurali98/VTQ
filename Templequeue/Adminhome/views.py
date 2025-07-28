@@ -27,8 +27,13 @@ from Registration.models import enquiry_model
 from Registration.models import role_model
 from Registration.enquiry_form import enquiry_form
 from Devotee.models import application_model
+from django.contrib.auth import authenticate ,logout as authlogout
 
 
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
 # Create your views here.
 def home (request):
     return render(request, "adminheader.html")
@@ -1737,3 +1742,6 @@ def delete_poojatype(request, pid):
 
     # Optionally, you could also render a template or return a different response in case of an error
     return HttpResponseRedirect("/Adhome/insert_poojatype")
+def logout(request):
+    authlogout(request)
+    return redirect('login')

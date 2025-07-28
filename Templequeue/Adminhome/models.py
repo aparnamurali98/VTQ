@@ -66,6 +66,7 @@ class templeinfo_model(models.Model):
     Photo=models.FileField(upload_to="photos", blank=True)
     Priest = models.ForeignKey(priest_model, on_delete=models.CASCADE,null=True)
     loc=models.ForeignKey(location_model,on_delete=models.CASCADE)
+    District= models.ForeignKey(distric_model, on_delete=models.CASCADE, null=True)
     Pooja=models.ManyToManyField(pooja_model)
     class Meta:
         db_table="templeinfo"

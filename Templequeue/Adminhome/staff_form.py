@@ -1,9 +1,16 @@
 from django import forms
 from django.core.validators import RegexValidator
 from .models import staff_model
+from django.utils import timezone
+
 
 class DateInput(forms.DateInput):
     input_type='date'
+
+    def __init__(self, **kwargs):
+        kwargs['attrs'] = {'max': timezone.now().date().strftime('%Y-%m-%d')}
+        super().__init__(**kwargs)
+
 gender=[('M','Male'),('F','Female')]
 class staf_form(forms.ModelForm):
     dob = forms.DateField(widget=DateInput,label='Date Of Birth')
@@ -25,10 +32,36 @@ class staf_form(forms.ModelForm):
     )
 
     photo= forms.FileField(label='Photo')
-    age= forms.IntegerField(label='Age')
+    age = forms.CharField(
+        max_length=2,
+        min_length=1,
+        validators=[
+            RegexValidator(
+                regex=r'^\d{2}$',
+                message="Invalid Age.",
+                code='invalid Age'
+            )
+        ]
+    )
     username = forms.CharField(max_length=20)
-    password = forms.CharField(max_length=10, widget=forms.PasswordInput)
-    confirm_password = forms.CharField(max_length=10, widget=forms.PasswordInput)
+    password = forms.CharField(
+        max_length=10,
+        widget=forms.PasswordInput,
+        validators=[
+            RegexValidator(
+                regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
+                message="Password must be minimum eight characters, at least one letter and one number",
+                code='invalid_password'
+            )
+        ]
+    )
+
+    confirm_password = forms.CharField(
+        max_length=20,
+        widget=forms.PasswordInput
+    )
+
+
     class Meta:
         model=staff_model
         fields=('sname','address','email','mobile','photo','dob','age','gender','Temple_name')

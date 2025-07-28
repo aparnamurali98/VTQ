@@ -1,36 +1,67 @@
-<!DOCTYPE html>
 {% extends 'staffheader.html' %}
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 {% block content %}
-
-   <table class="table table-striped">
-   <tr>
-
-        <th>Devotee Name</th>
-        <th>Pooja Name</th>
-       <th>Booking Date</th>
-        <th>Name</th>
-        <th>Star</th>
-    </tr>
-
-    {% for obj in booking %}
-    <tr>
-
-        <td>{{obj.Devotee.dname}}</td>
-        <td>{{obj.pooja}}</td>
-        <td>{{ obj.booking.Want_date }}</td>
-        <td>{{ obj.Name}}</td>
-        <td>{{ obj.star }}</td>
-          <td> <a href="{% url 'reply' obj.id %}" class="btn btn-primary">Reply</a></td>
-    </tr>
-    {% endfor %}
+<h2>Pooja Bookings</h2>
+<table class="table table-striped" id="bookingTable">
+    <thead>
+        <tr>
+            <th>Devotee Name</th>
+            <th>Booking Date</th>
+            <th colspan="2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.Devotee.dname }}</td>
+            <td>{{ booking.Want_date }}</td>
+            <td>
+                <button class="btn btn-primary" onclick="showDetails(this, {{ booking.id }})">Pooja Detail</button>
+            </td>
+            <td>
+                <a href="{% url 'reply' booking.id %}" class="btn btn-primary">Reply</a>
+            </td>
+        </tr>
+        <tr class="pooja-details" id="details-{{ booking.id }}" style="display: none;">
+            <td colspan="4">
+                <div class="card shadow-sm border-start border-4 border-primary">
+                    <div class="card-body p-3">
+                        <table class="table table-bordered table-sm mb-0 text-center">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Pooja</th>
+                                    <th>Name</th>
+                                    <th>Star</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for detail in booking.poojabook_model_set.all %}
+                                <tr>
+                                    <td>{{ detail.pooja}}</td>
+                                    <td>{{ detail.Name }}</td>
+                                    <td>{{ detail.star }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="3">No pooja details available.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
-{% endblock content %}
-</body>
-</html>
+
+<script>
+    function showDetails(button, bookingId) {
+        const allDetails = document.querySelectorAll(".pooja-details");
+        allDetails.forEach(row => row.style.display = "none"); // Hide all rows first
+
+        const detailRow = document.getElementById("details-" + bookingId);
+        if (detailRow) {
+            detailRow.style.display = "table-row";
+        }
+    }
+</script>
+{% endblock %}

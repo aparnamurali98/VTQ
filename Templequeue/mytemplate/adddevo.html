@@ -51,7 +51,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating date" id="age" data-target-input="nearest">
-                                            <input type="text" class="form-control " id="checkin" placeholder="Age" data-target="#date3" data-toggle="datetimepicker" name="age" required/>
+
+                                            <input type="number" class="form-control" id="checkin" name="age" min="18" max="99" required>
+
                                             <label for="age">Age</label>
                                         </div>
                                     </div>
@@ -76,7 +78,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                             <input type="number" class="form-control" id="mobile" placeholder="Phone Number" name="mobile" required>
+                                            <input type="tel" class="form-control" id="mobile" placeholder="Phone Number" name="mobile" pattern="[6-9]{1}[0-9]{9}" maxlength="10" required>
+
                                             <label for="mobile">Phone Number</label>
                                         </div>
                                     </div>
@@ -95,13 +98,17 @@
                                     </div>
                                      <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="username" placeholder="User Name" name="username" required>
+                                                <input type="text" class="form-control" id="username" name="username"
+                                               placeholder="User Name"
+                                               pattern="^[A-Za-z][A-Za-z0-9_]{4,}$"
+                                               title="Must be at least 5 characters, start with a letter, and contain only letters, numbers, and underscores"
+                                               required>
                                             <label for="username">User Name</label>
                                         </div>
                                     </div>
                                      <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="password" class="form-control" id="password" placeholder="password" name="password" required>
+                                            <input type="password" class="form-control" id="password" placeholder="password" name="password" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}" title="Minimum 8 characters with at least 1 letter and 1 number" required>
                                             <label for="password">Password</label>
                                         </div>
                                     </div>

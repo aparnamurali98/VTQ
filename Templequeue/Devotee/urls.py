@@ -22,6 +22,7 @@ urlpatterns = [
     path('payment/<int:pid>/<int:subtotal>/', views.payment, name='payment'),
     path('index', views.index, name='index'),
     path('receipt/<int:pid>/', views.receipt, name='receipt'),
+    path('show_receipt/',views.show_receipt,name='receiptview'),
 
 
 ]

@@ -94,10 +94,10 @@
                         <p class="dis fw-bold mb-2">Card details</p>
                         <div class="d-flex align-items-center justify-content-between card-atm border rounded">
                             <div class="fab fa-cc-visa ps-3"></div>
-                            <input type="text" class="form-control" placeholder="Card Details" name="Card_number" >
+                            <input type="text" class="form-control" placeholder="Card Details" name="Card_number" required pattern="^\d{16}$" title="Card number must be 16 digits" maxlength="16" >
                             <div class="d-flex w-50">
-                                <input type="text" class="form-control px-0" placeholder="MM/YY" name="card_exp_date" >
-                                <input type="password" maxlength=3 class="form-control px-0" placeholder="CVV" name="cvv_number">
+                                <input type="text" class="form-control px-0" placeholder="MM/YY" name="card_exp_date" required pattern="^(0[1-9]|1[0-2])\/\d{2}$" title="Use MM/YY format (e.g., 05/26)" >
+                                <input type="password" maxlength=3 class="form-control px-0" placeholder="CVV" name="cvv_number"  required pattern="^\d{3}$" title ="CVV number must be a 3" maxlength="3">
                             </div>
                         </div>
                         <div class="my-3 cardname">

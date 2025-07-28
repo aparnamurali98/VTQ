@@ -16,7 +16,13 @@ from .models import Expense_models
 from django.core.mail import EmailMessage, get_connection
 from django.conf import settings
 from django.core.mail import send_mail
+from django.db.models import F
+from django.db.models import Prefetch
+from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 
 # Create your views here.
 
@@ -128,24 +134,49 @@ def incomes(request):
 #     context['staff_income'] = staff_income
 #     return render(request, "viewincometotal.html", context)
 
+
+#
+# def pooja_booking(request):
+#     context = {}
+#     try:
+#         context['booking'] = poojabook_model.objects.select_related(
+#             'Devotee', 'booking'
+#         ).filter(
+#             booking__Want_date__gt=django.utils.timezone.now().date(),
+#             booking__Temple_name=request.session["Temp_name"],
+#             booking__Mail_status__isnull=True
+#         ).values(
+#             'Devotee__dname',
+#             'booking__Want_date'
+#         ).distinct()
+#     except Exception as ex:
+#         messages.error(request, f"An error occurred: {str(ex)}")
+#
+#     return render(request, "viewbooking.html", context)
+
 def pooja_booking(request):
     context = {}
-
     try:
+        bookings = bookingpooja_model.objects.filter(
+            Want_date__gt=timezone.now().date(),
+            Temple_name=request.session["Temp_name"],
+            Mail_status__isnull=True
+        ).prefetch_related(
+            Prefetch('poojabook_model_set', queryset=poojabook_model.objects.select_related('pooja'))
+        )
+        print(bookings.query)
 
-        context['booking'] = poojabook_model.objects.select_related(
-            'Devotee', 'booking', 'pooja'
-        ).filter(booking__Want_date__gt=django.utils.timezone.now().date(),booking__Temple_name=request.session["Temp_name"])
-
+        context['bookings'] = bookings
     except Exception as ex:
-        # Handle any unexpected exceptions
-        messages.error(request, f"An error occurred while fetching temple information: {str(ex)}")
+        messages.error(request, f"An error occurred: {str(ex)}")
 
-    # Render the template with the context data
     return render(request, "viewbooking.html", context)
 
-def staff_reply(request, booking_id):
-    booking = get_object_or_404(poojabook_model, id=booking_id)
+def staff_reply(request, booking_id,):
+    # booking = get_object_or_404(poojabook_model, booking=booking_id)
+    pooja = get_object_or_404(bookingpooja_model, id=booking_id)
+    pooja.Mail_status='sent'
+    pooja.save()
 
     if request.method == "POST":
         try:
@@ -161,7 +192,7 @@ def staff_reply(request, booking_id):
             ) as connection:
                 subject = "Reply to Your Pooja Booking"
                 email_from = settings.EMAIL_HOST_USER
-                recipient_list = [booking.Devotee.email]
+                recipient_list = [pooja.Devotee.email]
                 email = EmailMessage(subject, reply_message, email_from, recipient_list, connection=connection)
                 email.send()
 
@@ -171,7 +202,7 @@ def staff_reply(request, booking_id):
             print(f"Error sending reply: {e}")
             return HttpResponse(f"Failed to send reply: {e}")
 
-    return render(request, "staf_reply.html", {"booking": booking})
+    return render(request, "staf_reply.html", {"booking": pooja})
 
 
 def view_income(request):

@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,login as auth_login
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
@@ -12,7 +12,7 @@ from Adminhome.models import staff_model
 
 # Create your views here.
 def home (request):
-    return redirect(login)
+    return redirect(log)
 def insert_devotee(request):
     context={}
     if request.POST:
@@ -37,10 +37,11 @@ def insert_devotee(request):
             else:
                 messages.error(request,"password does not match")
         except Exception as ex:
-            # error_message="User Name Alredy Exists"
-            error_message = ex
+            error_message="User Name Alredy Exists"
+            # error_message = ex
 
             messages.error(request,error_message)
+
 
     context['District'] = distric_model.objects.all()
     return render(request,"adddevo.html",context)
@@ -84,7 +85,7 @@ def insert_enquiry(request):
 
 
 
-def login(request):
+def log(request):
     # Check if the request is a POST request
     if request.POST:
         context = {}
@@ -99,6 +100,8 @@ def login(request):
 
             # If authentication is successful
             if user is not None:
+                auth_login(request, user)
+
                 user_id = user.id
                 sp = user.is_superuser
 
@@ -144,7 +147,7 @@ def login(request):
 
         except Exception as ex:
             # Handle any unexpected exceptions and display an error message
-            return HttpResponse(f"<script>alert('An error occurred: {str(ex)}');window.location='/login';</script>")
+            return HttpResponse(f"<script>alert('An error occurred: {str(ex)}');window.location='/log';</script>")
 
     # Render the login page if the request is not a POST request
     return render(request, "login.html")

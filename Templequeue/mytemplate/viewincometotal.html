@@ -25,6 +25,19 @@
             {% endfor %}
 
  </table>
+<!-- Print Button -->
+<button onclick="printPage()">Print</button>
+
+<!-- Print Script -->
+<script>
+    function printPage() {
+        window.print();
+    }
+
+    window.onafterprint = function () {
+        window.location.href = "{% url 'home' %}"; // Replace 'home' with the correct URL name
+    };
+</script>
 {% endblock content %}
 
 </body>

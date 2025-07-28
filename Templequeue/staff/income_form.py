@@ -16,4 +16,4 @@ class incomes_form(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Exclude "Online Pooja Booking" (assuming ID is 10)
-        self.fields['income_typeid'].queryset = income_model.objects.exclude(id=10)
+        self.fields['income_typeid'].queryset = income_model.objects.exclude(id=1)

@@ -1,5 +1,6 @@
 from datetime import date
 from time import timezone
+from datetime import datetime
 
 import django.utils.timezone
 from MySQLdb.constants.FIELD_TYPE import NULL
@@ -27,7 +28,7 @@ from .application_form import application_form
 from .models import application_model, poojabook_model, bookingpooja_model, payment_model
 from .payment_form import payment_form
 from .poojabook_form import poojabook_form
-from .searchtemple_form import location_form
+from .searchtemple_form import district_form
 from Registration.models import devotee_model
 
 from Adminhome.models import pooja_model
@@ -40,6 +41,10 @@ from Adminhome.models import priest_model
 #
 # # Create your views here.
 # @login_required(login_url='/login')
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
 def home (request):
     context = {}
 
@@ -197,7 +202,7 @@ def search_temple(request):
 
     try:
         # Initialize the form with POST data if available
-        frm = location_form(request.POST or None)
+        frm = district_form(request.POST or None)
 
         # Add the form to the context for rendering
         context['f'] = frm
@@ -220,10 +225,10 @@ def search_temple(request):
 def search_temple1(request):
     try:
         # Retrieve location ID from the GET request parameters
-        locid = request.GET.get('selected_value')
+        distid = request.GET.get('selected_value')
 
         # Filter temple information based on the location ID
-        data = templeinfo_model.objects.filter(loc=locid)
+        data = templeinfo_model.objects.filter(District=distid)
 
         # Create a list of dictionaries with selected temple details
         data_list = [
@@ -252,7 +257,7 @@ def search_temple1(request):
 
 def insert_Application(request, cid):
     context = {}
-
+    # frm = application_form(request.POST or None, request.FILES or None)
     try:
         # Retrieve the devotee ID from the session
         did = request.session["devote_id"]
@@ -507,63 +512,8 @@ def Confirm_order(request):
     except Exception as e:
         # Print error for debugging if an exception occurs
         print(f"An error occurred while confirming the order: {e}")
+        return HttpResponseRedirect("/Devotee/Addtocart")
 
-
-# def payment(request, pid, subtotal):
-#     context = {}
-#
-#     try:
-#         # Retrieve devotee ID from session
-#         did = request.session["devote_id"]
-#         devote_object = devotee_model.objects.get(id=did)
-#
-#         if request.method == 'POST':
-#             # Get payment details from the POST request
-#             card_type = request.POST.get('card_type')
-#             card_holder_name = request.POST.get('card_holder_name')
-#             card_number = request.POST.get('Card_number')
-#             card_exp_date = request.POST.get('card_exp_date')
-#             cvv_number = request.POST.get('cvv_number')
-#             total_amount = subtotal  # Set total amount from the subtotal parameter
-#             income_date = timezone.now()  # Get the current date and time
-#             Narration = 'pooja booking'  # Set narration for the income entry
-#             typeid = income_model.objects.get(pk=10)  # Get income type by ID
-#
-#             # Retrieve the pooja booking record by ID
-#             pooja_booking = bookingpooja_model.objects.get(pk=pid)
-#
-#             # Create a payment record in the payment model
-#             payment = payment_model.objects.create(
-#                 poojabook=pooja_booking,
-#                 card_type=card_type,
-#                 card_holder_name=card_holder_name,
-#                 Card_number=card_number,
-#                 card_exp_date=card_exp_date,
-#                 cvv_number=cvv_number,
-#                 Total_amount=total_amount
-#             )
-#
-#             # Create an income record in the incomes model
-#             incomes = incomes_model.objects.create(
-#                 Devotee=devote_object,
-#                 Bookingpooja=pooja_booking,
-#                 income_typeid=typeid,
-#                 income_date=income_date,
-#                 Amount=total_amount,
-#                 Narration=Narration
-#             )
-#
-#             # Redirect to the receipt page
-#             url = reverse('receipt', kwargs={'pid': pid})
-#             return redirect(url)
-#
-#         context['subtotal'] = subtotal  # Pass the subtotal to the template
-#         return render(request, 'payment.html', context)
-#
-#     except Exception as e:
-#         # Print error for debugging if an exception occurs
-#         print(f"An error occurred during the payment process: {e}")
-#         return render(request, 'payment.html', context)  # Optionally, render the payment page again
 
 def payment(request, pid,subtotal):
 
@@ -635,4 +585,44 @@ def receipt(request, pid):
         print(f"An error occurred: {str(e)}")
         return render(request, "error.html", {"error": "An error occurred while generating the receipt."})
 
+
+def show_receipt(request):
+    context = {}
+    dt=NULL
+
+    try:
+        # Retrieve the devotee ID from the session
+        did = request.session.get("devote_id")
+
+        # Get the devotee object using the ID
+        devote_object = devotee_model.objects.get(pk=did)
+
+        # Retrieve the list of pooja bookings associated with the given booking ID (pid)
+        poojabook_list = poojabook_model.objects.select_related('pooja', 'booking').filter(Devotee=did,booking__booked_date__date=datetime.now().date())
+        for obj in poojabook_list:
+            dt= obj.booking.booked_date
+            print(poojabook_list.query)
+
+
+        # Add the poojabook list to the context for rendering in the template
+        context['poojabook_list'] = poojabook_list
+        context['dt'] = dt
+        print(dt,'date')
+
+        # Calculate the subtotal of pooja amounts and handle the case where subtotal might be None
+        subtotal = poojabook_list.aggregate(subtotal=Sum('pooja__amount'))['subtotal'] or 0
+        context['subtotal'] = subtotal
+
+        # Render the receipt template with the context data
+        return render(request, "receiptview.html", context)
+
+    except devotee_model.DoesNotExist:
+        # Handle the case where the devotee object is not found
+        print("Devotee does not exist.")
+        return render(request, "error.html", {"error": "Devotee not found."})
+
+    except Exception as e:
+        # Handle any other exceptions that may occur
+        print(f"An error occurred: {str(e)}")
+        return render(request, "error.html", {"error": "An error occurred while generating the receipt."})
 

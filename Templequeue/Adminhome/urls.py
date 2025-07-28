@@ -56,6 +56,8 @@ urlpatterns = [
     path('show_poojatype', views.show_poojatype, name='show_poojatype'),
     path('update_poojatype/<pid>', views.update_poojatype, name='up_poojatype'),
     path('delete_poojatype/<pid>', views.delete_poojatype, name='dele_poojatype'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='logged_out.html'), name='logout'),
+    # path('logout/', auth_views.LogoutView.as_view(template_name='login.html'), name='logout'),
+    path('logout',views.logout,name='logout'),
+
 
 ]

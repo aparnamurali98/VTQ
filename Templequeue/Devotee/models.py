@@ -28,6 +28,7 @@ class bookingpooja_model(models.Model):
     Status=models.CharField(max_length=30,default='New')
     staff = models.ForeignKey(staff_model, on_delete=models.CASCADE,null=True)
     Temple_name = models.ForeignKey(templeinfo_model, on_delete=models.CASCADE, null=True)
+    Mail_status=models.CharField(max_length=6,null=True)
 
     class Meta:
         db_table='Bokking_Pooja'
